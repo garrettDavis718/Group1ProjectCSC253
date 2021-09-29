@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 * CSC 253
 * Garrett Davis & Zach Fegan & Mateo Friend
 * This program is the second sprint of my text adventure game "The Last Surivors" 
+* Program successfully updated to github
 */
 namespace TheLastSurvivors
 {
