@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLastSurvivors", "TheLastSurvivors.csproj", "{FF3FDBF9-7361-44B7-9A4F-6A2EBD6CCA69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "World", "..\World\World.csproj", "{0EF8B53C-EA86-4F03-90FE-D8F96F38A94A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "World", "World\World.csproj", "{0EF8B53C-EA86-4F03-90FE-D8F96F38A94A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
