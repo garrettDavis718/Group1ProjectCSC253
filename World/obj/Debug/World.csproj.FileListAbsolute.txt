@@ -1,6 +1,0 @@
-C:\Users\garre\Desktop\School\Fall 2021\253\Actual Group Project\World\obj\Debug\World.csproj.AssemblyReference.cache
-C:\Users\garre\Desktop\School\Fall 2021\253\Actual Group Project\World\obj\Debug\World.csproj.CoreCompileInputs.cache
-C:\Users\garre\Desktop\School\Fall 2021\253\Actual Group Project\World\bin\Debug\World.dll
-C:\Users\garre\Desktop\School\Fall 2021\253\Actual Group Project\World\bin\Debug\World.pdb
-C:\Users\garre\Desktop\School\Fall 2021\253\Actual Group Project\World\obj\Debug\World.dll
-C:\Users\garre\Desktop\School\Fall 2021\253\Actual Group Project\World\obj\Debug\World.pdb
