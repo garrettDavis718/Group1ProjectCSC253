@@ -15,7 +15,7 @@ namespace TheLastSurvivors
 {
     class Program
     {
-        
+
         static void Main(string[] args)
         {
             //Run my first menu for entering the game and gettin the player's information
@@ -23,13 +23,7 @@ namespace TheLastSurvivors
             //Call our main menu method for the primary decision structure of my program
             Menu.MainMenu();
 
-            }
-
-            
-            
-            
-
-            
         }
     }
+}
 
