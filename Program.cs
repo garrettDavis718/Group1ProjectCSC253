@@ -1,9 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using World;
 using System.Threading.Tasks;
+using System.Configuration;
+using System.Data.SqlClient;
 /**
 * 09/26/21
 * CSC 253
@@ -13,17 +18,25 @@ using System.Threading.Tasks;
 */
 namespace TheLastSurvivors
 {
-    class Program
-    {
-
-        static void Main(string[] args)
+    public class Program
+    {   
+        
+        //Load Objects from Database
+        //Change logic to incorporate db
+        //Check if download works from github
+        public static void Main(string[] args)
         {
             //Run my first menu for entering the game and gettin the player's information
-            Menu.EntryMenu();
+            //Menu.EntryMenu();
             //Call our main menu method for the primary decision structure of my program
-            Menu.MainMenu();
+            //Menu.MainMenu();
+            DatabaseControls.LoadPotions();
+            Console.Read();
+            
 
         }
+  
+
     }
 }
 

@@ -205,6 +205,10 @@ namespace World
             
         }
         //Load mobs
+        public static void LoadMobs2()
+        {
+            
+        }
         public static void LoadMobs()
         {
             StreamReader inputFile;

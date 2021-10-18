@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,9 +55,11 @@ namespace World
                     do
                     {
 
-                        if (Validation.TestForUser(user.Name, user.Password) == false)
+                        if (DatabaseControls.CheckForUser(user) == false)
                         {
-                            Info.CreateNewCharacter(user);
+                            string workingDirectory = Environment.CurrentDirectory;
+                            string DBPath = Directory.GetParent(workingDirectory).Parent.Parent.FullName + @"\GROUP1PROJECTCSC253\LASTNIGHTDATABASE.MDF";
+                            DatabaseControls.SaveGame(user);
                             keepGoing = false;
                         }
                         else
