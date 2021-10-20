@@ -19,7 +19,7 @@ using System.Data.SqlClient;
 namespace TheLastSurvivors
 {
     public class Program
-    {   
+    {
         //Load Objects from Database
         //Fix weapons/attack functions for db update
         public static void Main(string[] args)
@@ -27,13 +27,13 @@ namespace TheLastSurvivors
             //Run my first menu for entering the game and gettin the player's information
             Menu.EntryMenu();
             //Call our main menu method for the primary decision structure of my program
-            Menu.MainMenu();;
-            
+            Menu.MainMenu(); ;
 
-            
+
+
 
         }
-  
+
 
     }
 }

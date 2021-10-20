@@ -35,15 +35,15 @@ namespace World
             try
             {
                 inputFile = File.OpenText("players.csv");
-                    foreach (string line in File.ReadAllLines("players.csv"))
-                    {
+                foreach (string line in File.ReadAllLines("players.csv"))
+                {
                     string[] token = line.Split(',');
-                        if (token[0].ToLower().Equals(name.ToLower()) && token[1].Equals(pass))
-                        {
-                            //tokenize the line and load it as an object with its correct pieces, then return it to hte menu
-                            AddToList(token[0], token[1], token[2], token[3]);
-                        }
+                    if (token[0].ToLower().Equals(name.ToLower()) && token[1].Equals(pass))
+                    {
+                        //tokenize the line and load it as an object with its correct pieces, then return it to hte menu
+                        AddToList(token[0], token[1], token[2], token[3]);
                     }
+                }
                 inputFile.Close();
 
             }
@@ -51,7 +51,7 @@ namespace World
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
         }
         //Ask for player information and test if it exists
         public static PlayerCharacter RequestPlayerCreds()
@@ -62,7 +62,7 @@ namespace World
             Console.WriteLine("Please enter your password: ");
             string pass = Console.ReadLine();
             do
-            { 
+            {
                 if (DatabaseControls.CheckForUser(name, pass) == true)
                 {
                     tryAgain = false;
@@ -181,7 +181,7 @@ namespace World
         {
             Lists.currentPlayer.Add(new PlayerCharacter(name, password, characterClass, characterRace));
         }
-        
+
         public static void GetEnemy(string name)
         {
 
@@ -195,7 +195,7 @@ namespace World
 
             }
         }
-    
+
         //use this method to determine the current weapon for the player
         public static void GetWeapon(string characterClass)
         {
@@ -217,9 +217,9 @@ namespace World
             {
                 Lists.CurrentWeapon[0] = Lists.Weapons[3];
             }
-           
+
         }
-        
+
 
 
 

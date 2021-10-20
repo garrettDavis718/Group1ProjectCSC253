@@ -37,8 +37,8 @@ namespace World
                 {
                     PlayerCharacter user = Info.RequestPlayerCreds();
                     Console.WriteLine("Player found!" + "(" + user.Name + ")");
-                    
-                    
+
+
                     Console.WriteLine("Great to see you again " + user.Name);
                     //stop the method from repeating
                     repeat = false;
@@ -129,7 +129,7 @@ namespace World
                         decision = decision.ToLower();
                         keepGoing = 0;
                         break;
-                        //case attack will call the damage method so and print the user's damage, also it will tell the user their current room
+                    //case attack will call the damage method so and print the user's damage, also it will tell the user their current room
                     case "attack":
                         Info.GetWeapon(user.CharacterClass);
                         Weapon currentWeapon = Lists.CurrentWeapon[0];
@@ -140,9 +140,9 @@ namespace World
                         foreach (Mob npc in Lists.Mobs)
                         {
                             //checks that the npc is in the same room and has health
-                            if (roomIndex == npc.RoomIndex && npc.HealthPoints > 0 )
+                            if (roomIndex == npc.RoomIndex && npc.HealthPoints > 0)
                             {
-                                enemyName = npc.Name; 
+                                enemyName = npc.Name;
                                 //Write the enemy to a line so the user can see
                                 Console.WriteLine(enemyName);
                             }
@@ -160,8 +160,8 @@ namespace World
                         decision = decision.ToLower();
                         keepGoing = 0;
                         break;
-                        //case look will show the user the description of the room
-                        //Will also let the user know what enemies are around, if any
+                    //case look will show the user the description of the room
+                    //Will also let the user know what enemies are around, if any
                     case "look":
                         currentRoom = Room.GetRoom(roomIndex);
                         Console.WriteLine("You are currently in " + currentRoom.Name +
@@ -178,11 +178,11 @@ namespace World
                         decision = decision.ToLower();
                         keepGoing = 0;
                         break;
-                        //exit case ends the statment
+                    //exit case ends the statment
                     case "exit":
                         keepGoing = 1;
                         break;
-                        //default case for when the user misinputs
+                    //default case for when the user misinputs
                     default:
                         Console.WriteLine("Please choose one of the following: \nMove\nAttack\nLook\nExit");
                         decision = Console.ReadLine();

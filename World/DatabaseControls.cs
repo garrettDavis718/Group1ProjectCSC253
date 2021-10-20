@@ -42,7 +42,7 @@ namespace World
                     {
                         cmd.ExecuteNonQuery();
                     }
-                    catch(SqlException ex)
+                    catch (SqlException ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
@@ -55,9 +55,9 @@ namespace World
             string workingDirectory = Environment.CurrentDirectory;
             string directory = Directory.GetParent(workingDirectory).Parent.FullName;
             directory += @"\LASTNIGHTDATABASE.MDF";
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + directory  + ";Integrated Security=True;Connect Timeout=30";
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + directory + ";Integrated Security=True;Connect Timeout=30";
             return connectionString;
-  }
+        }
         //Method that tests for existing user
         public static bool CheckForUser(string userName, string userPass)
         {
@@ -71,14 +71,14 @@ namespace World
                 connection.Open();
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = userName;
                 cmd.Parameters.Add("@Password", SqlDbType.NVarChar, 15).Value = userPass;
-                
-                int userCount = (int) cmd.ExecuteScalar();
+
+                int userCount = (int)cmd.ExecuteScalar();
                 if (userCount > 0)
                 {
                     Console.WriteLine("This user already exists.");
                     results = true;
                 }
-                else 
+                else
                 {
                     results = false;
                 }
@@ -131,12 +131,12 @@ namespace World
                         string mobDesc = dr["Description"].ToString();
                         double.TryParse(dr["HealthPoints"].ToString(), out mobHP);
                         double.TryParse(dr["ArmorClass"].ToString(), out mobAC);
-                        double.TryParse(dr["ManaPoints"].ToString(),out mobMP);
+                        double.TryParse(dr["ManaPoints"].ToString(), out mobMP);
                         int.TryParse(dr["Location"].ToString(), out mobLocation);
                         Mob npc = new Mob(mobId, mobName, mobHP, mobMP, mobAC, mobDesc, mobLocation);
                         List<Mob> mobList = new List<Mob>();
                         Lists.Mobs.Add(npc);
-                        
+
                     }
                 }
             }
@@ -290,21 +290,21 @@ namespace World
             SqlConnection connection = new SqlConnection(connectionString);
             LastNightDataBaseDataSetTableAdapters.TestTableAdapter testTableAdapter = new LastNightDataBaseDataSetTableAdapters.TestTableAdapter();
             DataTable testTable = new DataTable();
-            
+
             testTableAdapter.Delete(1, "Name");
-            
+
 
         }
         //select from db table
-    //    SqlDataReader dr = cmd.ExecuteReader();
+        //    SqlDataReader dr = cmd.ExecuteReader();
 
-    //                while (dr.Read())
-    //                {
-    //                    string testName = dr["TestName"].ToString();
-    //    string id = dr["Id"].ToString();
-    //    Console.WriteLine(testName + " " + id);
-    //                }
-    //dr.Close();
+        //                while (dr.Read())
+        //                {
+        //                    string testName = dr["TestName"].ToString();
+        //    string id = dr["Id"].ToString();
+        //    Console.WriteLine(testName + " " + id);
+        //                }
+        //dr.Close();
 
 
 
