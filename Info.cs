@@ -223,14 +223,10 @@ namespace TheLastSurvivors
                     foreach (string line in File.ReadAllLines("mobs.csv"))
                     {
                         string[] token = inputFile.ReadLine().Split(',');
-                        double hp;
-                        double mp;
-                        double ac;
-                        int roomIndex;
-                        double.TryParse(token[2], out hp);
-                        double.TryParse(token[3], out mp);
-                        double.TryParse(token[4], out ac);
-                        int.TryParse(token[6], out roomIndex);
+                        double.TryParse(token[2], out double hp);
+                        double.TryParse(token[3], out double mp);
+                        double.TryParse(token[4], out double ac);
+                        int.TryParse(token[6], out int roomIndex);
                         Lists.Mobs.Add(new Mob(token[0], token[1], hp, mp, ac, token[5], roomIndex));
                     }
                     

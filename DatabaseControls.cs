@@ -100,8 +100,7 @@ namespace TheLastSurvivors
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
-                        double itemWeight;
-                        double.TryParse(dr["ItemWeight"].ToString(), out itemWeight);
+                        double.TryParse(dr["ItemWeight"].ToString(), out double itemWeight);
                         Item item = new Item(itemWeight, dr["ItemName"].ToString(), dr["ItemDesc"].ToString(), dr["IsQuestItem"].ToString());
                         Lists.Items.Add(item);
 
@@ -128,8 +127,7 @@ namespace TheLastSurvivors
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
-                        int potionPoints;
-                        int.TryParse(dr["PotionPoints"].ToString(), out potionPoints);
+                        int.TryParse(dr["PotionPoints"].ToString(), out int potionPoints);
                         Potion potion = new Potion(dr["PotionId"].ToString(), dr["PotionName"].ToString(), dr["PotionDescription"].ToString(), potionPoints);
                         Lists.Potions.Add(potion);
 
@@ -180,8 +178,7 @@ namespace TheLastSurvivors
                     {
                         string treasureId = dr["Id"].ToString();
                         string treasureName = dr["TreasureName"].ToString();
-                        double treasurePrice;
-                        double.TryParse(dr["Price"].ToString(), out treasurePrice);
+                        double.TryParse(dr["Price"].ToString(), out double treasurePrice);
                         string treasureDesc = dr["Description"].ToString();
                         string isQuestItem = dr["IsQuestItem"].ToString();
 
@@ -207,11 +204,9 @@ namespace TheLastSurvivors
                     while (dr.Read())
                     {
                         string weaponName = dr["WeaponName"].ToString();
-                        int weaponCost;
-                        int.TryParse(dr["WeaponCost"].ToString(), out weaponCost);
+                        int.TryParse(dr["WeaponCost"].ToString(), out int weaponCost);
                         string weaponDmgType = dr["WeaponDmgType"].ToString();
-                        int weaponDmg;
-                        int.TryParse(dr["WeaponDamage"].ToString(), out weaponDmg);
+                        int.TryParse(dr["WeaponDamage"].ToString(), out int weaponDmg);
                         string weaponDesc = dr["WeaponDescription"].ToString();
 
                         Weapon weapon = new Weapon(weaponName, weaponCost, weaponDmgType, weaponDmg, weaponDesc);
@@ -239,12 +234,9 @@ namespace TheLastSurvivors
                     {
                         string PCName = dr["Name"].ToString();
                         string PCPass = dr["Password"].ToString();
-                        int PCHP;
-                        int.TryParse(dr["HealthPoints"].ToString(), out PCHP);
-                        int PCAC;
-                        int.TryParse(dr["ArmorClass"].ToString(), out PCAC);
-                        int PCLocation;
-                        int.TryParse(dr["Location"].ToString(), out PCLocation);
+                        int.TryParse(dr["HealthPoints"].ToString(), out int PCHP);
+                        int.TryParse(dr["ArmorClass"].ToString(), out int PCAC);
+                        int.TryParse(dr["Location"].ToString(), out int PCLocation);
                         string PCRace = dr["Race"].ToString();
                         string PCClass = dr["PlayerClass"].ToString();
 
