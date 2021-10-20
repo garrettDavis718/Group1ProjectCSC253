@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Data;
-using System.IO;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
-using System.Data.SqlClient;
+using World;
 
-namespace World
+namespace TheLastSurvivors
 {
     //This is my databasecontrols class, We control info within our database from here
     public class DatabaseControls
@@ -111,68 +112,7 @@ namespace World
         //Method that will load mobs into our application
         public static void LoadMobs()
         {
-            string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Mobs";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, connection))
-                {
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        int mobLocation;
-                        double mobHP;
-                        double mobMP;
-                        double mobAC;
-                        string mobId = dr["Id"].ToString();
-                        string mobName = dr["Name"].ToString();
-                        string mobDesc = dr["Description"].ToString();
-                        double.TryParse(dr["HealthPoints"].ToString(), out mobHP);
-                        double.TryParse(dr["ArmorClass"].ToString(), out mobAC);
-                        double.TryParse(dr["ManaPoints"].ToString(), out mobMP);
-                        int.TryParse(dr["Location"].ToString(), out mobLocation);
-                        Mob npc = new Mob(mobId, mobName, mobHP, mobMP, mobAC, mobDesc, mobLocation);
-                        List<Mob> mobList = new List<Mob>();
-                        Lists.Mobs.Add(npc);
-
-                    }
-                }
-            }
-        }
-        //method take in username and password and gets the rest of the user's information from the database (players table)
-        public static void LoadPlayer(string userName, string userPass)
-        {
-            string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Players WHERE Name like @Name AND Password like @Pass";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, connection))
-                {
-                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 20).Value = userName;
-                    cmd.Parameters.Add("@Pass", SqlDbType.NVarChar, 20).Value = userPass;
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        string PCName = dr["Name"].ToString();
-                        string PCPass = dr["Password"].ToString();
-                        int PCHP;
-                        int.TryParse(dr["HealthPoints"].ToString(), out PCHP);
-                        int PCAC;
-                        int.TryParse(dr["ArmorClass"].ToString(), out PCAC);
-                        int PCLocation;
-                        int.TryParse(dr["Location"].ToString(), out PCLocation);
-                        string PCRace = dr["Race"].ToString();
-                        string PCClass = dr["PlayerClass"].ToString();
-
-                        PlayerCharacter user = new PlayerCharacter(PCName, PCPass, PCHP, PCAC, PCRace, PCClass, PCLocation);
-                        Lists.currentPlayer.Add(user);
-                    }
-                }
-            }
+           
         }
         //Method that will load potions into our application
         public static void LoadPotions()
@@ -281,6 +221,39 @@ namespace World
                 }
             }
         }
+        //method take in username and password and gets the rest of the user's information from the database (players table)
+        public static void LoadPlayer(string userName, string userPass)
+        {
+            string connectionString = CreateConnectionString();
+            string query = "SELECT * FROM Players WHERE Name like @Name AND Password like @Pass";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 20).Value = userName;
+                    cmd.Parameters.Add("@Pass", SqlDbType.NVarChar, 20).Value = userPass;
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        string PCName = dr["Name"].ToString();
+                        string PCPass = dr["Password"].ToString();
+                        int PCHP;
+                        int.TryParse(dr["HealthPoints"].ToString(), out PCHP);
+                        int PCAC;
+                        int.TryParse(dr["ArmorClass"].ToString(), out PCAC);
+                        int PCLocation;
+                        int.TryParse(dr["Location"].ToString(), out PCLocation);
+                        string PCRace = dr["Race"].ToString();
+                        string PCClass = dr["PlayerClass"].ToString();
+
+                        PlayerCharacter user = new PlayerCharacter(PCName, PCPass, PCHP, PCAC, PCRace, PCClass, PCLocation);
+                        Lists.currentPlayer.Add(user);
+                    }
+                }
+            }
+        }
 
 
 
@@ -288,7 +261,7 @@ namespace World
         {
             string connectionString = ConfigurationManager.ConnectionStrings["TheLastSurvivors.Properties.Settings.LastNightDataBaseConnectionString"].ConnectionString;
             SqlConnection connection = new SqlConnection(connectionString);
-            LastNightDataBaseDataSetTableAdapters.TestTableAdapter testTableAdapter = new LastNightDataBaseDataSetTableAdapters.TestTableAdapter();
+            World.LastNightDataBaseDataSetTableAdapters.TestTableAdapter testTableAdapter = new World.LastNightDataBaseDataSetTableAdapters.TestTableAdapter();
             DataTable testTable = new DataTable();
 
             testTableAdapter.Delete(1, "Name");

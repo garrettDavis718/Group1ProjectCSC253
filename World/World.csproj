@@ -43,9 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arrays.cs" />
-    <Compile Include="Combat.cs" />
-    <Compile Include="DatabaseControls.cs" />
-    <Compile Include="Info.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="LastNightDataBaseDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -53,7 +50,6 @@
       <DependentUpon>LastNightDataBaseDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Lists.cs" />
-    <Compile Include="Menu.cs" />
     <Compile Include="Mob.cs" />
     <Compile Include="PlayerCharacter.cs" />
     <Compile Include="Potion.cs" />

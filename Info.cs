@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
+using World;
 
-namespace World
+
+namespace TheLastSurvivors
 {
     public static class Info
     {
@@ -62,8 +64,8 @@ namespace World
             Console.WriteLine("Please enter your password: ");
             string pass = Console.ReadLine();
             do
-            {
-                if (DatabaseControls.CheckForUser(name, pass) == true)
+            { 
+                if (Validation.TestForUser(name, pass) == true)
                 {
                     tryAgain = false;
                 }
@@ -181,7 +183,70 @@ namespace World
         {
             Lists.currentPlayer.Add(new PlayerCharacter(name, password, characterClass, characterRace));
         }
+        public static void LoadRooms()
+        {
+            StreamReader inputFile;
+            try
+            {
+                inputFile = File.OpenText("Rooms.csv");
+                while (!inputFile.EndOfStream)
+                {
+                    foreach (string line in File.ReadAllLines("rooms.csv"))
+                    {
+                        string[] token = inputFile.ReadLine().Split(',');
+                        //get enemy and assign to list so we can assign it to our room, just a convoluted conversion
+                        Lists.rooms.Add(new Room(token[0], token[1], token[2], token[3], token[4]));
+                    }
 
+                }
+                inputFile.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
+        }
+        //Load mobs
+        public static void LoadMobs2()
+        {
+            
+        }
+        public static void LoadMobs()
+        {
+            StreamReader inputFile;
+            try
+            {
+                inputFile = File.OpenText("mobs.csv");
+                while (!inputFile.EndOfStream)
+                {
+                    foreach (string line in File.ReadAllLines("mobs.csv"))
+                    {
+                        string[] token = inputFile.ReadLine().Split(',');
+                        double hp;
+                        double mp;
+                        double ac;
+                        int roomIndex;
+                        double.TryParse(token[2], out hp);
+                        double.TryParse(token[3], out mp);
+                        double.TryParse(token[4], out ac);
+                        int.TryParse(token[6], out roomIndex);
+                        Lists.Mobs.Add(new Mob(token[0], token[1], hp, mp, ac, token[5], roomIndex));
+                    }
+                    
+                }
+                inputFile.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+       
+       
+       
         public static void GetEnemy(string name)
         {
 

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace World
+using World;
+namespace TheLastSurvivors
 {
     public class Menu
     {
@@ -67,7 +67,9 @@ namespace World
                             keepGoing = true;
                         }
                     }
-                    while (keepGoing == true);
+                    while (keepGoing == true); 
+                    Info.FindExistingCharacter(user.Name, user.Password);
+                    user = Lists.currentPlayer[0];
                     //set username for future use when referring to player
                     string userName = user.Name;
                     //This method is supposed to add the new player to add the player to the current list of players, but It's not implemented correctly yet

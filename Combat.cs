@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using World;
 
-namespace World
+namespace TheLastSurvivors
 {
     //combat class that currently has the user do 0-20 damage based on a random number
     public class Combat
@@ -29,7 +30,7 @@ namespace World
                 healthLeft = enemy.HealthPoints - dmg;
                 return healthLeft;
             }
-            else 
+            else
             {
                 Console.WriteLine("You do not hit.");
                 return healthLeft;
@@ -46,7 +47,7 @@ namespace World
                 if (enemy.ToLower() != ("dog") && enemy.ToLower() != "mutant" && enemy.ToLower() != "skeleton" && enemy.ToLower() != "merchant" && enemy.ToLower() != "none"
                     && enemy.ToLower() != "war machine" && enemy.ToLower() != "zombie scientist" && enemy.ToLower() != "zombie doctor" && enemy.ToLower() != "dinosaur"
                     && enemy.ToLower() != "elvis impersonator" && enemy.ToLower() != "mario" && enemy.ToLower() != "merchant2" && enemy.ToLower() != "islander zombie" && enemy.ToLower() != "astronaut ghost"
-                    && enemy.ToLower() != "zebra") 
+                    && enemy.ToLower() != "zebra")
                 {
                     Console.WriteLine("Please enter a real enemy.");
                     enemy = Console.ReadLine();
