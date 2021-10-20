@@ -28,13 +28,7 @@ namespace TheLastSurvivors
             Menu.EntryMenu();
             //Call our main menu method for the primary decision structure of my program
             Menu.MainMenu(); ;
-
-
-
-
         }
-
-
     }
 }
 

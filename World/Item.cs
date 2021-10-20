@@ -16,6 +16,7 @@ namespace World
         private string _isQuestItem;
 
 
+
         //Item Custom constructor
         public Item(double weight, string name, string desc, string isQuestItem)
         {
@@ -24,30 +25,38 @@ namespace World
             _desc = desc;
             _isQuestItem = isQuestItem;
         }
+
+
+
         //Parameters
         public double Weight
         {
             get { return _weight; }
             set { _weight = value; }
         }
+
+
+
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
+
+
+
         public string Desc
         {
             get { return _desc; }
             set { _desc = value; }
         }
+
+
+
         public string IsQuestItem
         {
             get { return _isQuestItem; }
             set { _isQuestItem = value; }
-        }
-        
-        
-
-
+        }          
     }
 }

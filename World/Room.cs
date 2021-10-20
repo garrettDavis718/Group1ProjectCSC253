@@ -17,6 +17,8 @@ namespace World
         private string _roomId;
         private string _enemy;
 
+
+
         //room constructor
         public Room(string name, string desc, string exit, string roomId, string enemy)
         {
@@ -27,6 +29,9 @@ namespace World
             _enemy = enemy;
 
         }
+
+
+
         //default room constructor
         public Room()
         {
@@ -36,31 +41,48 @@ namespace World
             _roomId = RoomId;
 
         }
+
+
+
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
+
+
+
         public string Desc
         {
             get { return _desc; }
             set { _desc = value; }
         }
+
+
+
         public string Exit
         {
             get { return _exit; }
             set { _exit = value; }
         }
+
+
+
         public string RoomId
         {
             get{ return _roomId; }
             set{ _roomId = value; }
         }
+
+
+
         public string Enemy
         {
             get { return _enemy; }
             set { _enemy = value; }
         }
+
+
 
         //method to get the current room based on the roomindex paramter
         public static Room GetRoom(int roomIndex)
@@ -68,6 +90,9 @@ namespace World
             Room currentRoom = Lists.rooms[roomIndex];
             return currentRoom;
         }
+
+
+
         //method to get the current room's index based on which way the user decided to move
         public static int MoveRoom(int roomIndex, string direction)
         {
@@ -81,10 +106,8 @@ namespace World
             {
                 roomIndex--;
             }
-            else { };
-           
+            else { };         
             return roomIndex;
-        }
-        
+        }        
     }
 }

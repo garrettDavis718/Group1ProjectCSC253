@@ -50,6 +50,9 @@ namespace TheLastSurvivors
                 }
             }
         }
+
+
+
         //get directory for db location and create the connectionString for use within our DbControls class
         public static string CreateConnectionString()
         {
@@ -59,6 +62,9 @@ namespace TheLastSurvivors
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + directory + ";Integrated Security=True;Connect Timeout=30";
             return connectionString;
         }
+
+
+
         //Method that tests for existing user
         public static bool CheckForUser(string userName, string userPass)
         {
@@ -86,6 +92,9 @@ namespace TheLastSurvivors
                 return results;
             }
         }
+
+
+
         //Method that will load items into our application
         public static void LoadItems()
         {
@@ -103,16 +112,20 @@ namespace TheLastSurvivors
                         double.TryParse(dr["ItemWeight"].ToString(), out double itemWeight);
                         Item item = new Item(itemWeight, dr["ItemName"].ToString(), dr["ItemDesc"].ToString(), dr["IsQuestItem"].ToString());
                         Lists.Items.Add(item);
-
                     }
                 }
             }
         }
+
+
+
         //Method that will load mobs into our application
         public static void LoadMobs()
-        {
-           
+        {        
         }
+
+
+
         //Method that will load potions into our application
         public static void LoadPotions()
         {
@@ -130,11 +143,13 @@ namespace TheLastSurvivors
                         int.TryParse(dr["PotionPoints"].ToString(), out int potionPoints);
                         Potion potion = new Potion(dr["PotionId"].ToString(), dr["PotionName"].ToString(), dr["PotionDescription"].ToString(), potionPoints);
                         Lists.Potions.Add(potion);
-
                     }
                 }
             }
         }
+
+
+
         //Method to load rooms
         public static void LoadRooms()
         {
@@ -157,11 +172,13 @@ namespace TheLastSurvivors
 
                         Room room = new Room(roomName, roomDesc, roomExit, roomId, roomEnemy);
                         Lists.rooms.Add(room);
-
                     }
                 }
             }
         }
+
+
+
         //Method to load Treasure
         public static void LoadTreasure()
         {
@@ -184,11 +201,13 @@ namespace TheLastSurvivors
 
                         Treasure treasure = new Treasure(treasureId, treasureName, treasurePrice, treasureDesc, isQuestItem);
                         Lists.Treasures.Add(treasure);
-
                     }
                 }
             }
         }
+
+
+
         //Method to load Weapons
         public static void LoadWeapons()
         {
@@ -211,11 +230,13 @@ namespace TheLastSurvivors
 
                         Weapon weapon = new Weapon(weaponName, weaponCost, weaponDmgType, weaponDmg, weaponDesc);
                         Lists.Weapons.Add(weapon);
-
                     }
                 }
             }
         }
+
+
+
         //method take in username and password and gets the rest of the user's information from the database (players table)
         public static void LoadPlayer(string userName, string userPass)
         {
@@ -257,9 +278,10 @@ namespace TheLastSurvivors
             DataTable testTable = new DataTable();
 
             testTableAdapter.Delete(1, "Name");
-
-
         }
+
+
+
         //select from db table
         //    SqlDataReader dr = cmd.ExecuteReader();
 
@@ -270,8 +292,5 @@ namespace TheLastSurvivors
         //    Console.WriteLine(testName + " " + id);
         //                }
         //dr.Close();
-
-
-
     }
 }

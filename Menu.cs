@@ -20,6 +20,8 @@ namespace TheLastSurvivors
             Console.ReadLine();
         }
 
+
+
         //Menu that is seen as soon as you open our game, this will find out if your a new or returning member
         public static void EntryMenu()
         {
@@ -90,6 +92,10 @@ namespace TheLastSurvivors
             }
             while (repeat == true);
         }
+
+
+
+
         //main menu method
         public static void MainMenu()
         {

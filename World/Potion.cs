@@ -16,6 +16,7 @@ namespace World
         public int PotionPoints { get; set; }
 
 
+
         //Potion constructor
         public Potion(string potionId, string name, string desc, int potionPoints)
         {
@@ -24,6 +25,9 @@ namespace World
             _desc = desc;
             PotionPoints = potionPoints;
         }
+
+
+
         //potion properties
         public string PotionId
         {
@@ -31,11 +35,16 @@ namespace World
             set { _potionId = value; }
         }
 
+
+
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
+
+
+
         public string Desc
         {
             get { return _desc; }

@@ -20,6 +20,9 @@ namespace TheLastSurvivors
             //return our damage
             return toHit;
         }
+
+
+
         //method that gives the health of the enemy after we try attacking them, can fail
         public static double HitCheck(int toHit, double dmg, Mob enemy, string weaponName)
         {

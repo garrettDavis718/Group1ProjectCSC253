@@ -18,6 +18,8 @@ namespace World
         private double _armorClass;
         private int _roomIndex;
         
+
+
         //constructor
         public Mob(string mobId, string name, double healthPoints, double manaPoints, double armorClass, string desc, int roomIndex)
         {
@@ -29,6 +31,9 @@ namespace World
             _armorClass = armorClass;
             _roomIndex = roomIndex;
         }
+
+
+
         //default constructor
         public Mob()
         {
@@ -40,37 +45,58 @@ namespace World
             _armorClass = ArmorClass;
             _roomIndex = RoomIndex;
         }
+
+
+
         //properties
         public string MobId
         {
             get { return _mobId; }
             set { _mobId = value; }
         }
+
+
+
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
+
+
+
         public double HealthPoints
         {
             get { return _healthPoints; }
             set { _healthPoints = value; }
         }
+
+
+
         public double ManaPoints
         {
             get { return _manaPoints; }
             set { _manaPoints = value; }
         }
+
+
+
         public double ArmorClass
         {
             get { return _armorClass ; }
             set { _armorClass = value; }
         }
+
+
+
         public string Desc
         {
             get { return _desc; }
             set { _desc = value; }
         }
+
+
+
         public int RoomIndex
         {
             get { return _roomIndex; }

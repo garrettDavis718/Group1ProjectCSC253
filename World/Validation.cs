@@ -25,6 +25,9 @@ namespace World
                 return result;
             }
         }
+
+
+
         public static bool TestClass(string characterClass)
         {
             bool results;
@@ -42,6 +45,9 @@ namespace World
             }
 
         }
+
+
+
         //Method for testing if theirs an upper-cased letter in a string, used for password validation
         public static bool TestUpper(string password)
         {
@@ -71,6 +77,9 @@ namespace World
             //return our results based on password entry
             return testResults;
         }
+
+
+
         //basically the same method as before, just using char.IsLower() method
         public static bool TestLower(string password)
         {
@@ -95,6 +104,9 @@ namespace World
             }
             return testResults;
         }
+
+
+
         //IMPROVE CODE HERE
         //This method will check to see if the password string contains any of the following special characters, if it does it will return a true boolean (testResults)
         public static bool TestSpecial(string password)
@@ -114,6 +126,9 @@ namespace World
             //return our bool for user to see
             return testResults;
         }
+
+
+
         //final password tester that will each earlier test to see what needs to be changed about the user's specific input, requires all previous tests answer's as paramaters
         public static bool TestPassword(bool upper, bool lower, bool special)
         {
@@ -141,6 +156,9 @@ namespace World
             else { result = true; }
             return result;
         }
+
+
+
         //See if user exists with given information, returns a bool
         public static bool TestForUser(string name, string pass)
         {
@@ -160,7 +178,6 @@ namespace World
                 }
                 inputFile.Close();
                 return results;
-
             }
             catch (Exception ex)
             {

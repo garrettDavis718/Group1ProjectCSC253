@@ -29,6 +29,9 @@ namespace TheLastSurvivors
                 Console.WriteLine(message);
             }
         }
+
+
+
         //Method that will find a user's information based on their input name and password, then create the currentPlayer character
         //in the currentPlayer list for use in the program. Load method
         public static void FindExistingCharacter(string name, string pass)
@@ -53,8 +56,10 @@ namespace TheLastSurvivors
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
+
+
+
         //Ask for player information and test if it exists
         public static PlayerCharacter RequestPlayerCreds()
         {
@@ -83,6 +88,9 @@ namespace TheLastSurvivors
             PlayerCharacter user = Lists.currentPlayer[0];
             return user;
         }
+
+
+
         //Request player race and check if race exists
         public static string GetPlayerRace()
         {
@@ -105,12 +113,13 @@ namespace TheLastSurvivors
                     tryAgain = true;
 
                 }
-
             }
             while (tryAgain == true);
             return characterRace;
-
         }
+
+
+
         //Request player class and check if it exists
         public static string GetPlayerClass()
         {
@@ -133,6 +142,9 @@ namespace TheLastSurvivors
             while (tryAgain == true);
             return playerClass;
         }
+
+
+
         public static PlayerCharacter GetPlayer()
         {
             //Start by asking for name
@@ -178,6 +190,9 @@ namespace TheLastSurvivors
             return user;
 
         }
+
+
+
         //Add character to the current character list, this just make it easier to pass the character around
         public static void AddToList(string name, string password, string characterClass, string characterRace)
         {
@@ -207,11 +222,17 @@ namespace TheLastSurvivors
             }
             
         }
+
+
+
         //Load mobs
         public static void LoadMobs2()
         {
             
         }
+
+
+
         public static void LoadMobs()
         {
             StreamReader inputFile;
@@ -256,6 +277,8 @@ namespace TheLastSurvivors
 
             }
         }
+
+
 
         //use this method to determine the current weapon for the player
         public static void GetWeapon(string characterClass)
