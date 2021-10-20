@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
+using World;
 
-namespace World
+
+namespace TheLastSurvivors
 {
     public static class Info
     {
@@ -35,15 +37,15 @@ namespace World
             try
             {
                 inputFile = File.OpenText("players.csv");
-                    foreach (string line in File.ReadAllLines("players.csv"))
-                    {
+                foreach (string line in File.ReadAllLines("players.csv"))
+                {
                     string[] token = line.Split(',');
-                        if (token[0].ToLower().Equals(name.ToLower()) && token[1].Equals(pass))
-                        {
-                            //tokenize the line and load it as an object with its correct pieces, then return it to hte menu
-                            AddToList(token[0], token[1], token[2], token[3]);
-                        }
+                    if (token[0].ToLower().Equals(name.ToLower()) && token[1].Equals(pass))
+                    {
+                        //tokenize the line and load it as an object with its correct pieces, then return it to hte menu
+                        AddToList(token[0], token[1], token[2], token[3]);
                     }
+                }
                 inputFile.Close();
 
             }
@@ -51,7 +53,7 @@ namespace World
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
         }
         //Ask for player information and test if it exists
         public static PlayerCharacter RequestPlayerCreds()
@@ -62,7 +64,7 @@ namespace World
             Console.WriteLine("Please enter your password: ");
             string pass = Console.ReadLine();
             do
-            { 
+            {
                 if (Validation.TestForUser(name, pass) == true)
                 {
                     tryAgain = false;
@@ -202,12 +204,12 @@ namespace World
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
         }
         //Load mobs
         public static void LoadMobs2()
         {
-            
+
         }
         public static void LoadMobs()
         {
@@ -230,7 +232,7 @@ namespace World
                         int.TryParse(token[6], out roomIndex);
                         Lists.Mobs.Add(new Mob(token[0], token[1], hp, mp, ac, token[5], roomIndex));
                     }
-                    
+
                 }
                 inputFile.Close();
 
@@ -242,7 +244,7 @@ namespace World
 
         }
         //load items
-         public static void LoadItems()
+        public static void LoadItems()
         {
             StreamReader inputFile;
             try
@@ -252,14 +254,14 @@ namespace World
                 {
                     foreach (string line in File.ReadAllLines("Items.csv"))
                     {
-                       string[] token = inputFile.ReadLine().Split(',');
-                       double price;
-                       bool questItem;
-                       double.TryParse(token[0], out price);
-                       bool.TryParse(token[3], out questItem);
-                       Lists.Items.Add(new Item(price, token[1], token[2], questItem)); 
+                        string[] token = inputFile.ReadLine().Split(',');
+                        double price;
+                        bool questItem;
+                        double.TryParse(token[0], out price);
+                        bool.TryParse(token[3], out questItem);
+                        Lists.Items.Add(new Item(price, token[1], token[2], questItem));
                     }
-                    
+
                 }
                 inputFile.Close();
 
@@ -269,7 +271,7 @@ namespace World
                 Console.WriteLine(ex.Message);
             }
 
-            
+
         }
         //load treasure
         public static void LoadTreasures()
@@ -289,7 +291,7 @@ namespace World
                         bool.TryParse(token[4], out questItem);
                         Lists.Treasures.Add(new Treasure(token[0], token[1], price, token[3], questItem));
                     }
-                    
+
                 }
                 inputFile.Close();
 
@@ -315,7 +317,7 @@ namespace World
                         string[] token = inputFile.ReadLine().Split(',');
                         Lists.Potions.Add(new Potion(token[0], token[1], token[2]));
                     }
-                    
+
                 }
                 inputFile.Close();
 

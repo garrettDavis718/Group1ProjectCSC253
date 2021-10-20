@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Data;
-using System.IO;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
-using System.Data.SqlClient;
+using World;
 
-namespace World
+namespace TheLastSurvivors
 {
     //This is my databasecontrols class, We control info within our database from here
     public class DatabaseControls
@@ -42,7 +43,7 @@ namespace World
                     {
                         cmd.ExecuteNonQuery();
                     }
-                    catch(SqlException ex)
+                    catch (SqlException ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
@@ -55,9 +56,9 @@ namespace World
             string workingDirectory = Environment.CurrentDirectory;
             string directory = Directory.GetParent(workingDirectory).Parent.FullName;
             directory += @"\LASTNIGHTDATABASE.MDF";
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + directory  + ";Integrated Security=True;Connect Timeout=30";
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + directory + ";Integrated Security=True;Connect Timeout=30";
             return connectionString;
-  }
+        }
         //Method that tests for existing user
         public static bool CheckForUser(PlayerCharacter user)
         {
@@ -71,14 +72,14 @@ namespace World
                 connection.Open();
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = user.Name;
                 cmd.Parameters.Add("@Password", SqlDbType.NVarChar, 15).Value = user.Password;
-                
-                int userCount = (int) cmd.ExecuteScalar();
+
+                int userCount = (int)cmd.ExecuteScalar();
                 if (userCount > 0)
                 {
                     Console.WriteLine("This user already exists.");
                     results = true;
                 }
-                else 
+                else
                 {
                     results = false;
                 }
@@ -87,7 +88,7 @@ namespace World
         }
         public static void LoadMobs()
         {
-           
+
         }
         public static void LoadPotions()
         {
@@ -120,23 +121,23 @@ namespace World
         {
             string connectionString = ConfigurationManager.ConnectionStrings["TheLastSurvivors.Properties.Settings.LastNightDataBaseConnectionString"].ConnectionString;
             SqlConnection connection = new SqlConnection(connectionString);
-            LastNightDataBaseDataSetTableAdapters.TestTableAdapter testTableAdapter = new LastNightDataBaseDataSetTableAdapters.TestTableAdapter();
+            World.LastNightDataBaseDataSetTableAdapters.TestTableAdapter testTableAdapter = new World.LastNightDataBaseDataSetTableAdapters.TestTableAdapter();
             DataTable testTable = new DataTable();
-            
+
             testTableAdapter.Delete(1, "Name");
-            
+
 
         }
         //select from db table
-    //    SqlDataReader dr = cmd.ExecuteReader();
+        //    SqlDataReader dr = cmd.ExecuteReader();
 
-    //                while (dr.Read())
-    //                {
-    //                    string testName = dr["TestName"].ToString();
-    //    string id = dr["Id"].ToString();
-    //    Console.WriteLine(testName + " " + id);
-    //                }
-    //dr.Close();
+        //                while (dr.Read())
+        //                {
+        //                    string testName = dr["TestName"].ToString();
+        //    string id = dr["Id"].ToString();
+        //    Console.WriteLine(testName + " " + id);
+        //                }
+        //dr.Close();
 
 
 

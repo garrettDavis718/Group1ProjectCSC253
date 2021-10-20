@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace World
+using World;
+namespace TheLastSurvivors
 {
     public class Menu
     {
@@ -69,7 +69,7 @@ namespace World
                             keepGoing = true;
                         }
                     }
-                    while (keepGoing == true); 
+                    while (keepGoing == true);
                     Info.FindExistingCharacter(user.Name, user.Password);
                     user = Lists.currentPlayer[0];
                     //set username for future use when referring to player
@@ -132,7 +132,7 @@ namespace World
                         decision = decision.ToLower();
                         keepGoing = 0;
                         break;
-                        //case attack will call the damage method so and print the user's damage, also it will tell the user their current room
+                    //case attack will call the damage method so and print the user's damage, also it will tell the user their current room
                     case "attack":
                         Lists.CurrentWeapon[0] = Info.GetWeapon(Lists.currentPlayer[0].CharacterClass);
                         currentRoom = Room.GetRoom(roomIndex);
@@ -142,9 +142,9 @@ namespace World
                         foreach (Mob npc in Lists.Mobs)
                         {
                             //checks that the npc is in the same room and has health
-                            if (roomIndex == npc.RoomIndex && npc.HealthPoints > 0 )
+                            if (roomIndex == npc.RoomIndex && npc.HealthPoints > 0)
                             {
-                                enemyName = npc.Name; 
+                                enemyName = npc.Name;
                                 //Write the enemy to a line so the user can see
                                 Console.WriteLine(enemyName);
                             }
@@ -162,8 +162,8 @@ namespace World
                         decision = decision.ToLower();
                         keepGoing = 0;
                         break;
-                        //case look will show the user the description of the room
-                        //Will also let the user know what enemies are around, if any
+                    //case look will show the user the description of the room
+                    //Will also let the user know what enemies are around, if any
                     case "look":
                         currentRoom = Room.GetRoom(roomIndex);
                         Console.WriteLine("You are currently in " + currentRoom.Name +
@@ -180,11 +180,11 @@ namespace World
                         decision = decision.ToLower();
                         keepGoing = 0;
                         break;
-                        //exit case ends the statment
+                    //exit case ends the statment
                     case "exit":
                         keepGoing = 1;
                         break;
-                        //default case for when the user misinputs
+                    //default case for when the user misinputs
                     default:
                         Console.WriteLine("Please choose one of the following: \nMove\nAttack\nLook\nExit");
                         decision = Console.ReadLine();
