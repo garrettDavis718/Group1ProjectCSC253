@@ -10,25 +10,25 @@ namespace World
     public class Item
     {
         //constructors
-        private double _price;
+        private double _weight;
         private string _name;
         private string _desc;
-        private bool _questItem;
+        private string _isQuestItem;
 
 
         //Item Custom constructor
-        public Item(double price, string name, string desc, bool questItem)
+        public Item(double weight, string name, string desc, string isQuestItem)
         {
-            _price = price;
+            _weight = weight;
             _name = name;
             _desc = desc;
-            _questItem = questItem;
+            _isQuestItem = isQuestItem;
         }
         //Parameters
-        public double Price
+        public double Weight
         {
-            get { return _price; }
-            set { _price = value; }
+            get { return _weight; }
+            set { _weight = value; }
         }
         public string Name
         {
@@ -40,10 +40,10 @@ namespace World
             get { return _desc; }
             set { _desc = value; }
         }
-        public bool QuestItem
+        public string IsQuestItem
         {
-            get { return _questItem; }
-            set { _questItem = value; }
+            get { return _isQuestItem; }
+            set { _isQuestItem = value; }
         }
         
         

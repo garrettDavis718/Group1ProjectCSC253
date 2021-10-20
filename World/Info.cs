@@ -63,7 +63,7 @@ namespace World
             string pass = Console.ReadLine();
             do
             { 
-                if (Validation.TestForUser(name, pass) == true)
+                if (DatabaseControls.CheckForUser(name, pass) == true)
                 {
                     tryAgain = false;
                 }
@@ -77,7 +77,8 @@ namespace World
                 }
             }
             while (tryAgain == true);
-            PlayerCharacter user = new PlayerCharacter(name, pass);
+            DatabaseControls.LoadPlayer(name, pass);
+            PlayerCharacter user = Lists.currentPlayer[0];
             return user;
         }
         //Request player race and check if race exists
@@ -180,179 +181,7 @@ namespace World
         {
             Lists.currentPlayer.Add(new PlayerCharacter(name, password, characterClass, characterRace));
         }
-        public static void LoadRooms()
-        {
-            StreamReader inputFile;
-            try
-            {
-                inputFile = File.OpenText("Rooms.csv");
-                while (!inputFile.EndOfStream)
-                {
-                    foreach (string line in File.ReadAllLines("rooms.csv"))
-                    {
-                        string[] token = inputFile.ReadLine().Split(',');
-                        //get enemy and assign to list so we can assign it to our room, just a convoluted conversion
-                        Lists.rooms.Add(new Room(token[0], token[1], token[2], token[3], token[4]));
-                    }
-
-                }
-                inputFile.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            
-        }
-        //Load mobs
-        public static void LoadMobs()
-        {
-            StreamReader inputFile;
-            try
-            {
-                inputFile = File.OpenText("mobs.csv");
-                while (!inputFile.EndOfStream)
-                {
-                    foreach (string line in File.ReadAllLines("mobs.csv"))
-                    {
-                        string[] token = inputFile.ReadLine().Split(',');
-                        double hp;
-                        double mp;
-                        double ac;
-                        int roomIndex;
-                        double.TryParse(token[2], out hp);
-                        double.TryParse(token[3], out mp);
-                        double.TryParse(token[4], out ac);
-                        int.TryParse(token[6], out roomIndex);
-                        Lists.Mobs.Add(new Mob(token[0], token[1], hp, mp, ac, token[5], roomIndex));
-                    }
-                    
-                }
-                inputFile.Close();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-        }
-        //load items
-         public static void LoadItems()
-        {
-            StreamReader inputFile;
-            try
-            {
-                inputFile = File.OpenText("Items.csv");
-                while (!inputFile.EndOfStream)
-                {
-                    foreach (string line in File.ReadAllLines("Items.csv"))
-                    {
-                       string[] token = inputFile.ReadLine().Split(',');
-                       double price;
-                       bool questItem;
-                       double.TryParse(token[0], out price);
-                       bool.TryParse(token[3], out questItem);
-                       Lists.Items.Add(new Item(price, token[1], token[2], questItem)); 
-                    }
-                    
-                }
-                inputFile.Close();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            
-        }
-        //load treasure
-        public static void LoadTreasures()
-        {
-            StreamReader inputFile;
-            try
-            {
-                inputFile = File.OpenText("Treasure.csv");
-                while (!inputFile.EndOfStream)
-                {
-                    foreach (string line in File.ReadAllLines("Treasure.csv"))
-                    {
-                        string[] token = inputFile.ReadLine().Split(',');
-                        double price;
-                        bool questItem;
-                        double.TryParse(token[2], out price);
-                        bool.TryParse(token[4], out questItem);
-                        Lists.Treasures.Add(new Treasure(token[0], token[1], price, token[3], questItem));
-                    }
-                    
-                }
-                inputFile.Close();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-
-        }
-        //Load potions
-        public static void LoadPotions()
-        {
-            StreamReader inputFile;
-            try
-            {
-                inputFile = File.OpenText("Potions.csv");
-                while (!inputFile.EndOfStream)
-                {
-                    foreach (string line in File.ReadAllLines("Potions.csv"))
-                    {
-                        string[] token = inputFile.ReadLine().Split(',');
-                        Lists.Potions.Add(new Potion(token[0], token[1], token[2]));
-                    }
-                    
-                }
-                inputFile.Close();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-
-        }
-        //load weapons 
-        public static void LoadWeapons()
-        {
-            StreamReader inputFile;
-            try
-            {
-                inputFile = File.OpenText("Weapons.csv");
-                while (!inputFile.EndOfStream)
-                {
-                    foreach (string line in File.ReadAllLines("Weapons.csv"))
-                    {
-                        string[] token = inputFile.ReadLine().Split(',');
-                        int price;
-                        int dmg;
-                        int.TryParse(token[1], out price);
-                        int.TryParse(token[3], out dmg);
-                        Lists.Weapons.Add(new Weapon(token[0], price, token[2], dmg, token[4]));
-                    }
-
-                }
-                inputFile.Close();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-
-        }
+        
         public static void GetEnemy(string name)
         {
 
@@ -366,15 +195,11 @@ namespace World
 
             }
         }
-        public static void LoadCurrentWeapon()
-        {
-            Lists.CurrentWeapon.Add(new Weapon());
-        }
+    
         //use this method to determine the current weapon for the player
-        public static Weapon GetWeapon(string characterClass)
+        public static void GetWeapon(string characterClass)
         {
-            Info.LoadWeapons();
-            LoadCurrentWeapon();
+            DatabaseControls.LoadWeapons();
 
             if (characterClass == "Gunslinger")
             {
@@ -392,35 +217,9 @@ namespace World
             {
                 Lists.CurrentWeapon[0] = Lists.Weapons[3];
             }
-            return Lists.CurrentWeapon[0];
+           
         }
-        //Save file method, needs fixing
-        /*public static void SaveCharacter(PlayerCharacter user)
-        {
-            StreamWriter outputFile;
-            StreamReader inputFile;
-            try
-            {
-                outputFile = File.AppendText("player.csv");
-                inputFile = File.OpenText("player.csv");
-                List<PlayerCharacter> users = new List<PlayerCharacter>();
-                foreach (string line in File.ReadAllLines("player.csv"))
-                {
-                    string[] token = inputFile.ReadLine().Split(',');
-                    
-                    if (line.Contains(Lists.currentPlayer[0].Name))
-                    {
-                        users.Add(new PlayerCharacter(token[0], token[1], token[2], token[3]));
-                        outputFile.
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-        */
+        
 
 
 

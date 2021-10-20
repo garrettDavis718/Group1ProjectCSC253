@@ -65,7 +65,6 @@ namespace World
         //method to get the current room based on the roomindex paramter
         public static Room GetRoom(int roomIndex)
         {
-            Info.LoadRooms();
             Room currentRoom = Lists.rooms[roomIndex];
             return currentRoom;
         }

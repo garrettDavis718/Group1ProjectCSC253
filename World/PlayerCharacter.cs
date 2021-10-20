@@ -16,6 +16,7 @@ namespace World
         private string _password;
         private string _race;
         private string _characterClass;
+        public int Location { get; set; }
         private Weapon _weapon;
 
         public PlayerCharacter(string name, string password, string race, string characterClass)
@@ -25,7 +26,7 @@ namespace World
             Race = race;
             CharacterClass = characterClass;
         }
-        public PlayerCharacter(string name, string password, double healthPoints, double armorClass, string race, string characterClass, Weapon weapon)
+        public PlayerCharacter(string name, string password, double healthPoints, double armorClass, string race, string characterClass, int location)
         {
             Name = name;
             HealthPoints = healthPoints;
@@ -33,7 +34,7 @@ namespace World
             Password = password;
             Race = race;
             CharacterClass = characterClass;
-            Weapon = weapon;
+            Location = location;
         }
         public PlayerCharacter(string name, string password)
         {
@@ -76,6 +77,7 @@ namespace World
             get { return _characterClass; }
             set { _characterClass = value; }
         }
+       
         public Weapon Weapon
         {
             get { return _weapon; }

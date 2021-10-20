@@ -14,15 +14,15 @@ namespace World
         private string _name;
         private double _value;
         private string _desc;
-        private bool _questItem;
+        private string _isQuestItem;
         //Constructor
-        public Treasure(string treasureId, string name, double value, string desc, bool questItem)
+        public Treasure(string treasureId, string name, double value, string desc, string isQuestItem)
         {
             _treasureId = treasureId;
             _name = name;
             _value = value;
             _desc = desc;
-            _questItem = questItem;
+            _isQuestItem = isQuestItem;
         }
         //properties
         public string TreasureId
@@ -45,10 +45,10 @@ namespace World
             get { return _desc; }
             set { _desc = value; }
         }
-        public bool QuestItem
+        public string IsQuestItem
         {
-            get { return _questItem; }
-            set { _questItem = value; }
+            get { return _isQuestItem; }
+            set { _isQuestItem = value; }
         }
 
     }

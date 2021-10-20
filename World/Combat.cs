@@ -80,7 +80,6 @@ namespace World
                         int toHit = Combat.SwingWeapon();
                         //hardcoded damage(for now)
                         int dmg;
-                        Lists.CurrentWeapon[0] = Info.GetWeapon(Lists.currentPlayer[0].CharacterClass);
                         dmg = Lists.CurrentWeapon[0].Damage;
                         //update the healthpoint of our current enemy
                         Lists.CurrentEnemies[0].HealthPoints = Combat.HitCheck(toHit, dmg, Lists.CurrentEnemies[0], Lists.CurrentWeapon[0].Name);
@@ -111,6 +110,13 @@ namespace World
             newHealth = health - dmg;
             //return newHealth
             return newHealth;
+        }
+        //Put our weapon in inventory
+        public static Weapon GetWeapon(int weaponID)
+        {
+            Weapon currentWeapon = Lists.Weapons[weaponID];
+            
+            return currentWeapon;
         }
     }
 }

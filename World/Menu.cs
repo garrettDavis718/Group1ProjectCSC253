@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,8 +37,8 @@ namespace World
                 {
                     PlayerCharacter user = Info.RequestPlayerCreds();
                     Console.WriteLine("Player found!" + "(" + user.Name + ")");
-                    Info.FindExistingCharacter(user.Name, user.Password);
-                    user = Lists.currentPlayer[0];
+                    
+                    
                     Console.WriteLine("Great to see you again " + user.Name);
                     //stop the method from repeating
                     repeat = false;
@@ -54,9 +55,9 @@ namespace World
                     do
                     {
 
-                        if (Validation.TestForUser(user.Name, user.Password) == false)
+                        if (DatabaseControls.CheckForUser(user.Name, user.Password) == false)
                         {
-                            Info.CreateNewCharacter(user);
+                            DatabaseControls.SaveGame(user);
                             keepGoing = false;
                         }
                         else
@@ -66,9 +67,7 @@ namespace World
                             keepGoing = true;
                         }
                     }
-                    while (keepGoing == true); 
-                    Info.FindExistingCharacter(user.Name, user.Password);
-                    user = Lists.currentPlayer[0];
+                    while (keepGoing == true);
                     //set username for future use when referring to player
                     string userName = user.Name;
                     //This method is supposed to add the new player to add the player to the current list of players, but It's not implemented correctly yet
@@ -92,12 +91,13 @@ namespace World
         //main menu method
         public static void MainMenu()
         {
-            Info.LoadWeapons();
-            Info.LoadRooms();
-            Info.LoadItems();
-            Info.LoadMobs();
-            Info.LoadTreasures();
-            Info.LoadPotions();
+            DatabaseControls.LoadItems();
+            DatabaseControls.LoadMobs();
+            DatabaseControls.LoadPotions();
+            DatabaseControls.LoadRooms();
+            DatabaseControls.LoadTreasure();
+            DatabaseControls.LoadWeapons();
+            PlayerCharacter user = Lists.currentPlayer[0];
             //show main menu to user and ask for input
             Console.WriteLine("What would you like to do?\nMove\nAttack\nLook\nExit ");
             //assign variable for decision to be used in switch statement
@@ -131,7 +131,8 @@ namespace World
                         break;
                         //case attack will call the damage method so and print the user's damage, also it will tell the user their current room
                     case "attack":
-                        Lists.CurrentWeapon[0] = Info.GetWeapon(Lists.currentPlayer[0].CharacterClass);
+                        Info.GetWeapon(user.CharacterClass);
+                        Weapon currentWeapon = Lists.CurrentWeapon[0];
                         currentRoom = Room.GetRoom(roomIndex);
                         Console.WriteLine("What would you like to attack?(type none to cancel)");
                         string enemyName;
