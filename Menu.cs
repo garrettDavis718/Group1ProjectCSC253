@@ -158,9 +158,9 @@ namespace TheLastSurvivors
                         //Ask the user who they would like to attack
                         Console.WriteLine("Who you want to attack? ");
                         //save a string of the user's choice of enemy
-                        string enemy = Console.ReadLine();
+                        Combat.GenerateCurrentEnemyList();
                         //run our atatckWho combat class with our current room and our enemy choice
-                        Combat.AttackWho(enemy, roomIndex);
+                        Combat.Attack(enemy);
                         //Show where the user is and give their room's name
                         Console.WriteLine("You are currently in " + currentRoom.Name);
                         Console.WriteLine("What would you like to do next? ");
