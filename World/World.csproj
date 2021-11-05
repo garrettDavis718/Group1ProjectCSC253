@@ -44,11 +44,6 @@
   <ItemGroup>
     <Compile Include="Arrays.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="LastNightDataBaseDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LastNightDataBaseDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Lists.cs" />
     <Compile Include="Mob.cs" />
     <Compile Include="PlayerCharacter.cs" />
@@ -66,21 +61,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="LastNightDataBaseDataSet.xsc">
-      <DependentUpon>LastNightDataBaseDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="LastNightDataBaseDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>LastNightDataBaseDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="LastNightDataBaseDataSet.xss">
-      <DependentUpon>LastNightDataBaseDataSet.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="WorldDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
