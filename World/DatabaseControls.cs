@@ -1,70 +1,38 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using World;
 
-namespace TheLastSurvivors
+
+namespace World
 {
     //This is my databasecontrols class, We control info within our database from here
     public class DatabaseControls
     {
-        //Save Game method, takes in user and the part of the database that needs to be local to the user
-        public static void SaveGame(PlayerCharacter user)
-        {
-            string connectionString = CreateConnectionString();
-            //setup our sqlConnection to our connectionstring that is local to the user
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                //Create our sqlCommand
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    //Connection and paramaters for our SqlCommand
-                    cmd.Connection = conn;
-                    cmd.CommandText = "INSERT INTO Players (Name, Password, HealthPoints, ArmorClass, Location, Race, PlayerClass) " +
-                        "VALUES (@Name, @Password, @HealthPoints, @ArmorClass, @Location, @Race, @PlayerClass)";
 
-                    //define the parameter values
-                    cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = user.Name;
-                    cmd.Parameters.Add("@Password", SqlDbType.VarChar, 15).Value = user.Password;
-                    cmd.Parameters.Add("@HealthPoints", SqlDbType.Int).Value = user.HealthPoints;
-                    cmd.Parameters.Add("@ArmorClass", SqlDbType.Int).Value = user.ArmorClass;
-                    cmd.Parameters.Add("@Location", SqlDbType.Int).Value = user.Location;
-                    cmd.Parameters.Add("@Race", SqlDbType.VarChar, 50).Value = user.Race;
-                    cmd.Parameters.Add("@PlayerClass", SqlDbType.VarChar, 50).Value = user.CharacterClass;
-
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (SqlException ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-            }
-        }
-
-
-
-        //get directory for db location and create the connectionString for use within our DbControls class
+        //connectstring setup
         public static string CreateConnectionString(string id = "Default")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
+        public static void SaveGame(PlayerCharacter user)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                cnn.Execute("insert into Players (Name, Password) values (@Name, @Password)", user);
+            }
 
-
-
+        }
         //Method that tests for existing user
         public static bool CheckForUser(string userName, string userPass)
         {
-
             string connectionString = CreateConnectionString();
             bool results;
             string Command = "Select Count(*) FROM Players WHERE Name like @Name AND Password like @Password";
@@ -92,152 +60,77 @@ namespace TheLastSurvivors
 
 
         //Method that will load items into our application
-        public static void LoadItems()
+        public static List<Item> LoadItems()
         {
-            string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Items";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, connection))
-                {
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        double.TryParse(dr["ItemWeight"].ToString(), out double itemWeight);
-                        Item item = new Item(itemWeight, dr["ItemName"].ToString(), dr["ItemDesc"].ToString(), dr["IsQuestItem"].ToString());
-                        Lists.Items.Add(item);
-                    }
-                }
+                var output = cnn.Query<Item>("SELECT * FROM Items", new DynamicParameters());
+                return output.ToList();
             }
         }
-
-
-
-        //Method that will load mobs into our application
-        public static void LoadMobs()
-        {        
-        }
-
-
-
-        //Method that will load potions into our application
-        public static void LoadPotions()
+        //Load Mobs List
+        public static List<Mob> LoadMobs()
         {
-            string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Potions";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, connection))
-                {
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        int.TryParse(dr["PotionPoints"].ToString(), out int potionPoints);
-                        Potion potion = new Potion(dr["PotionId"].ToString(), dr["PotionName"].ToString(), dr["PotionDescription"].ToString(), potionPoints);
-                        Lists.Potions.Add(potion);
-                    }
-                }
+                var output = cnn.Query<Mob>("SELECT * FROM mobs", new DynamicParameters());
+                return output.ToList();                
+            }
+        }
+        //Method that will load potions into our application
+        public static List<Potion> LoadPotions()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                var output = cnn.Query<Potion>("SELECT * FROM potions", new DynamicParameters());
+                return output.ToList();
+            }
+        }
+        //Method that will load Treasures into our application
+        public static List<Treasure> LoadTreasures()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                var output = cnn.Query<Treasure>("SELECT * FROM Treasure", new DynamicParameters());
+                return output.ToList();
+            }
+        }
+        //Method that will load Weapons into our application
+        public static List<Weapon> LoadWeapons()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                var output = cnn.Query<Weapon>("SELECT * FROM Weapons", new DynamicParameters());
+                return output.ToList();
+            }
+        }
+        //Method that will load KeyItems into our application
+        public static List<KeyItem> LoadKeyItems()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                var output = cnn.Query<KeyItem>("SELECT * FROM KeyItems", new DynamicParameters());
+                return output.ToList();
             }
         }
 
 
 
         //Method to load rooms
-        public static void LoadRooms()
+        public static List<Room> LoadRooms()
         {
-            string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Rooms";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, connection))
-                {
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        string roomId = dr["Id"].ToString();
-                        string roomName = dr["Name"].ToString();
-                        string roomExit = dr["Exit"].ToString();
-                        string roomDesc = dr["Description"].ToString();
-                        string roomEnemy = dr["Mob"].ToString();
-
-                        Room room = new Room(roomName, roomDesc, roomExit, roomId, roomEnemy);
-                        Lists.rooms.Add(room);
-                    }
-                }
+                var output = cnn.Query<Room>("SELECT * From Rooms", new DynamicParameters());
+                return output.ToList();
             }
         }
-
-
-
-        //Method to load Treasure
-        public static void LoadTreasure()
-        {
-            string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Treasure";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, connection))
-                {
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        string treasureId = dr["Id"].ToString();
-                        string treasureName = dr["TreasureName"].ToString();
-                        double.TryParse(dr["Price"].ToString(), out double treasurePrice);
-                        string treasureDesc = dr["Description"].ToString();
-                        string isQuestItem = dr["IsQuestItem"].ToString();
-
-                        Treasure treasure = new Treasure(treasureId, treasureName, treasurePrice, treasureDesc, isQuestItem);
-                        Lists.Treasures.Add(treasure);
-                    }
-                }
-            }
-        }
-
-
-
-        //Method to load Weapons
-        public static void LoadWeapons()
-        {
-            string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Weapons";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, connection))
-                {
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        string weaponName = dr["WeaponName"].ToString();
-                        int.TryParse(dr["WeaponCost"].ToString(), out int weaponCost);
-                        string weaponDmgType = dr["WeaponDmgType"].ToString();
-                        int.TryParse(dr["WeaponDamage"].ToString(), out int weaponDmg);
-                        string weaponDesc = dr["WeaponDescription"].ToString();
-
-                        Weapon weapon = new Weapon(weaponName, weaponCost, weaponDmgType, weaponDmg, weaponDesc);
-                        Lists.Weapons.Add(weapon);
-                    }
-                }
-            }
-        }
-
-
 
         //method take in username and password and gets the rest of the user's information from the database (players table)
         public static void LoadPlayer(string userName, string userPass)
         {
             string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Players WHERE Name like @Name AND Password like @Pass";
+            string query = "SELECT * FROM Players WHERE Name like @Name AND Password like @Password";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -245,7 +138,7 @@ namespace TheLastSurvivors
                 using (SqlCommand cmd = new SqlCommand(query, connection))
                 {
                     cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 20).Value = userName;
-                    cmd.Parameters.Add("@Pass", SqlDbType.NVarChar, 20).Value = userPass;
+                    cmd.Parameters.Add("@Password", SqlDbType.NVarChar, 20).Value = userPass;
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
@@ -253,32 +146,16 @@ namespace TheLastSurvivors
                         string PCPass = dr["Password"].ToString();
                         int.TryParse(dr["HealthPoints"].ToString(), out int PCHP);
                         int.TryParse(dr["ArmorClass"].ToString(), out int PCAC);
-                        int.TryParse(dr["Location"].ToString(), out int PCLocation);
+                        int.TryParse(dr["XLocation"].ToString(), out int XLocation);
+                        int.TryParse(dr["YLocation"].ToString(), out int YLocation);
                         string PCRace = dr["Race"].ToString();
                         string PCClass = dr["PlayerClass"].ToString();
 
-                        PlayerCharacter user = new PlayerCharacter(PCName, PCPass, PCHP, PCAC, PCRace, PCClass, PCLocation);
+                        PlayerCharacter user = new PlayerCharacter(PCName, PCPass, PCClass, PCRace, PCHP, PCAC, XLocation, YLocation);
                         Lists.currentPlayer.Add(user);
                     }
                 }
             }
         }
-
-
-
-
-
-
-
-        //select from db table
-        //    SqlDataReader dr = cmd.ExecuteReader();
-
-        //                while (dr.Read())
-        //                {
-        //                    string testName = dr["TestName"].ToString();
-        //    string id = dr["Id"].ToString();
-        //    Console.WriteLine(testName + " " + id);
-        //                }
-        //dr.Close();
     }
 }

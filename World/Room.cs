@@ -14,18 +14,20 @@ namespace World
         private string _name;
         private string _desc;
         private string _exit;
-        private string _roomId;
+        public int XLocation { get; set; }
+        public int YLocation { get; set; }
         private string _enemy;
 
 
 
         //room constructor
-        public Room(string name, string desc, string exit, string roomId, string enemy)
+        public Room(string name, string desc, string exit, int xLocation, int yLocation, string enemy)
         {
             _name = name;
             _desc = desc;
             _exit = exit;
-            _roomId = roomId;
+            XLocation = xLocation;
+            YLocation = yLocation;
             _enemy = enemy;
 
         }
@@ -35,11 +37,6 @@ namespace World
         //default room constructor
         public Room()
         {
-            _name = Name;
-            _desc = Desc;
-            _exit = Exit;
-            _roomId = RoomId;
-
         }
 
 
@@ -67,12 +64,6 @@ namespace World
         }
 
 
-
-        public string RoomId
-        {
-            get{ return _roomId; }
-            set{ _roomId = value; }
-        }
 
 
 

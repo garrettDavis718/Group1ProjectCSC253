@@ -70,7 +70,7 @@ namespace TheLastSurvivors
                         }
                     }
                     while (keepGoing == true); 
-                    Info.FindExistingCharacter(user.Name, user.Password);
+                    DatabaseControls.CheckForUser(user.Name, user.Password);
                     user = Lists.currentPlayer[0];
                     //set username for future use when referring to player
                     string userName = user.Name;
@@ -103,7 +103,7 @@ namespace TheLastSurvivors
             DatabaseControls.LoadMobs();
             DatabaseControls.LoadPotions();
             DatabaseControls.LoadRooms();
-            DatabaseControls.LoadTreasure();
+            DatabaseControls.LoadTreasures();
             DatabaseControls.LoadWeapons();
             PlayerCharacter user = Lists.currentPlayer[0];
             //show main menu to user and ask for input
@@ -139,28 +139,30 @@ namespace TheLastSurvivors
                         break;
                     //case attack will call the damage method so and print the user's damage, also it will tell the user their current room
                     case "attack":
-                        Info.GetWeapon(user.CharacterClass);
+                        Info.GetWeapon(user.PlayerClass);
                         Weapon currentWeapon = Lists.CurrentWeapon[0];
                         currentRoom = Room.GetRoom(roomIndex);
                         Console.WriteLine("What would you like to attack?(type none to cancel)");
                         string enemyName;
                         //generate a small list of mobs that the user can see, only shows nearby enemies
-                        foreach (Mob npc in Lists.Mobs)
-                        {
-                            //checks that the npc is in the same room and has health
-                            if (roomIndex == npc.RoomIndex && npc.HealthPoints > 0)
-                            {
-                                enemyName = npc.Name;
-                                //Write the enemy to a line so the user can see
-                                Console.WriteLine(enemyName);
-                            }
-                        }
+                        //foreach (Mob npc in Lists.Mobs)
+                        //{
+                        //    //checks that the npc is in the same room and has health
+                        //    if (roomIndex == npc.RoomIndex && npc.HealthPoints > 0)
+                        //    {
+                        //        enemyName = npc.Name;
+                        //        //Write the enemy to a line so the user can see
+                        //        Console.WriteLine(enemyName);
+                        //    }
+                        //}
                         //Ask the user who they would like to attack
                         Console.WriteLine("Who you want to attack? ");
                         //save a string of the user's choice of enemy
-                        Combat.GenerateCurrentEnemyList();
+
+                        //Combat.GenerateCurrentEnemyList();
+
                         //run our atatckWho combat class with our current room and our enemy choice
-                        Combat.Attack(enemy);
+                        //Combat.Attack(enemy);
                         //Show where the user is and give their room's name
                         Console.WriteLine("You are currently in " + currentRoom.Name);
                         Console.WriteLine("What would you like to do next? ");
@@ -174,13 +176,13 @@ namespace TheLastSurvivors
                         currentRoom = Room.GetRoom(roomIndex);
                         Console.WriteLine("You are currently in " + currentRoom.Name +
                             "you see " + currentRoom.Desc);
-                        foreach (Mob npc in Lists.Mobs)
-                        {
-                            if (roomIndex == npc.RoomIndex && npc.HealthPoints > 0)
-                            {
-                                Console.WriteLine("You see a " + npc.Name);
-                            }
-                        }
+                        //foreach (Mob npc in Lists.Mobs)
+                        //{
+                        //    if (roomIndex == npc.RoomIndex && npc.HealthPoints > 0)
+                        //    {
+                        //        Console.WriteLine("You see a " + npc.Name);
+                        //    }
+                        //}
                         Console.WriteLine("What would you like to do next? ");
                         decision = Console.ReadLine();
                         decision = decision.ToLower();

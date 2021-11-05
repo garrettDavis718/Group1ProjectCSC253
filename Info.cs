@@ -19,7 +19,8 @@ namespace TheLastSurvivors
             try
             {
                 outputFile = File.AppendText("players.csv");
-                outputFile.WriteLine($"{newUser.Name},{newUser.Password},{newUser.Race},{newUser.CharacterClass}");
+                outputFile.WriteLine($"{newUser.Name},{newUser.Password},{newUser.Race},{newUser.PlayerClass}, {newUser.HealthPoints}, " +
+                    $"{newUser.ArmorClass}, {newUser.XLocation}, {newUser.YLocation}");
                 outputFile.Close();
                 Console.WriteLine("New player created! Welcome to the game!");
             }
@@ -32,31 +33,8 @@ namespace TheLastSurvivors
 
 
 
-        //Method that will find a user's information based on their input name and password, then create the currentPlayer character
-        //in the currentPlayer list for use in the program. Load method
-        public static void FindExistingCharacter(string name, string pass)
-        {
-            StreamReader inputFile;
-            try
-            {
-                inputFile = File.OpenText("players.csv");
-                foreach (string line in File.ReadAllLines("players.csv"))
-                {
-                    string[] token = line.Split(',');
-                    if (token[0].ToLower().Equals(name.ToLower()) && token[1].Equals(pass))
-                    {
-                        //tokenize the line and load it as an object with its correct pieces, then return it to hte menu
-                        AddToList(token[0], token[1], token[2], token[3]);
-                    }
-                }
-                inputFile.Close();
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
+       
 
 
 
@@ -185,7 +163,7 @@ namespace TheLastSurvivors
             string characterClass = Info.GetPlayerClass();
             //initialize our current user as a playerCharacter object
             PlayerCharacter user;
-            user = new PlayerCharacter(userName, password, characterRace, characterClass);
+            user = new PlayerCharacter(userName, password, characterRace, characterClass, 25, 15, 0, 0);
             //return the user's created character;
             return user;
 
@@ -193,11 +171,7 @@ namespace TheLastSurvivors
 
 
 
-        //Add character to the current character list, this just make it easier to pass the character around
-        public static void AddToList(string name, string password, string characterClass, string characterRace)
-        {
-            Lists.currentPlayer.Add(new PlayerCharacter(name, password, characterClass, characterRace));
-        }
+
  
        
         public static void GetEnemy(string name)

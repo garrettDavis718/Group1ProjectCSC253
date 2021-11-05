@@ -21,23 +21,23 @@ namespace TheLastSurvivors
             return toHit;
         }
         //method to create current list of enemies
-        public static void GenerateCurrentEnemyList()
-        {
-            int location = Lists.currentPlayer[0].Location;
-            foreach (Mob enemy in Lists.Mobs)
-            {
-                if (enemy.RoomIndex == location)
-                {
-                    Lists.CurrentEnemies.Add(enemy);
-                }
-            }
-        }
-
+        //public static void GenerateCurrentEnemyList()
+        //{
+        //    int location = Lists.currentPlayer[0].Location;
+        //    foreach (Mob enemy in Lists.Mobs)
+        //    {
+        //        if (enemy.RoomIndex == location)
+        //        {
+        //            Lists.CurrentEnemies.Add(enemy);
+        //        }
+        //    }
+        //}
+        
 
         //method that gives the health of the enemy after we try attacking them, can fail
-        public static double HitCheck(int toHit, double dmg, Mob enemy, string weaponName)
+        public static int HitCheck(int toHit, int dmg, Mob enemy, string weaponName)
         {
-            double healthLeft = enemy.HealthPoints;
+            int healthLeft = enemy.HealthPoints;
             if (toHit >= enemy.ArmorClass)
             {
                 Console.WriteLine("You hit for " + dmg + " damage with your " + weaponName);
