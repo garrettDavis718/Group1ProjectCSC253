@@ -10,20 +10,21 @@ namespace World
     public class Item
     {
         //constructors
+        public int ID { get; set; }
         private double _weight;
         private string _name;
         private string _desc;
-        private string _isQuestItem;
 
 
 
         //Item Custom constructor
-        public Item(double weight, string name, string desc, string isQuestItem)
+        public Item(int id, double weight, string name, string desc)
         {
+            ID = id;
             _weight = weight;
             _name = name;
             _desc = desc;
-            _isQuestItem = isQuestItem;
+
         }
 
 
@@ -52,11 +53,6 @@ namespace World
         }
 
 
-
-        public string IsQuestItem
-        {
-            get { return _isQuestItem; }
-            set { _isQuestItem = value; }
-        }          
+       
     }
 }

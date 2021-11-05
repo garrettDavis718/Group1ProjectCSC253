@@ -54,13 +54,9 @@ namespace TheLastSurvivors
 
 
         //get directory for db location and create the connectionString for use within our DbControls class
-        public static string CreateConnectionString()
+        public static string CreateConnectionString(string id = "Default")
         {
-            string workingDirectory = Environment.CurrentDirectory;
-            string directory = Directory.GetParent(workingDirectory).Parent.FullName;
-            directory += @"\LASTNIGHTDATABASE.MDF";
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + directory + ";Integrated Security=True;Connect Timeout=30";
-            return connectionString;
+            return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
 
 
@@ -270,15 +266,7 @@ namespace TheLastSurvivors
 
 
 
-        public static void DeleteTest()
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["TheLastSurvivors.Properties.Settings.LastNightDataBaseConnectionString"].ConnectionString;
-            SqlConnection connection = new SqlConnection(connectionString);
-            World.LastNightDataBaseDataSetTableAdapters.TestTableAdapter testTableAdapter = new World.LastNightDataBaseDataSetTableAdapters.TestTableAdapter();
-            DataTable testTable = new DataTable();
 
-            testTableAdapter.Delete(1, "Name");
-        }
 
 
 
