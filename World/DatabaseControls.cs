@@ -22,13 +22,24 @@ namespace World
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
+        //method for saving the game of the new player
+        public static void CreateNewPlayer(PlayerCharacter user)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                cnn.Execute("insert into Players (Name, Password, Race, Class, HealthPoints, ArmorClass, XLocation, YLocation) " +
+                    "values (@Name, @Password, @Race, @PlayerClass, @HealthPoints, @ArmorClass, @XLocation, @YLocation)", user);
+            }
+
+        }
+        //method for saving the game of an existing player
         public static void SaveGame(PlayerCharacter user)
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
-                cnn.Execute("insert into Players (Name, Password) values (@Name, @Password)", user);
+                cnn.Execute("UPDATE Players SET HealthPoints = @HealthPoints, XLocation = @XLocation, YLocation = @YLocation " +
+                    "WHERE Name LIKE @Name AND Password LIKE @Password", user);
             }
-
         }
         //Method that tests for existing user
         public static bool CheckForUser(string userName, string userPass)
@@ -74,7 +85,7 @@ namespace World
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 var output = cnn.Query<Mob>("SELECT * FROM mobs", new DynamicParameters());
-                return output.ToList();                
+                return output.ToList();
             }
         }
         //Method that will load potions into our application

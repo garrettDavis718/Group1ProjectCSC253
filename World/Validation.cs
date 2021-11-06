@@ -9,45 +9,31 @@ namespace World
 {
     public static class Validation
     {
-        public static bool TestRace(string characterRace)
+        public static string TestPassword(string password)
         {
-            bool result;
-            characterRace = characterRace.ToUpper();
-            if (characterRace == "HUMAN" || characterRace == "ELF" || characterRace == "DWARF"
-                || characterRace == "DOG" || characterRace == "ROBOT" || characterRace == "ADMIN")
+            string results = "";
+            bool upper = TestUpper(password);
+            bool lower = TestLower(password);
+            bool special = TestSpecial(password);
+
+            if (upper == true && lower == true && special == true)
             {
-                result = true;
-                return result;
+                results = "Taken!";
             }
-            else
+            else if (upper == false)
             {
-                result = false;
-                return result;
+                results = "No Upper Character";
             }
+            else if (lower == false)
+            {
+                results = "No Lower Character.";
+            }
+            else if (special == false)
+            {
+                results = "No special character";
+            }
+            return results;
         }
-
-
-
-        public static bool TestClass(string characterClass)
-        {
-            bool results;
-            characterClass = characterClass.ToUpper();
-            if (characterClass == "ROAD WARRIOR" || characterClass == "GUNSLINGER" || characterClass == "MECHANIC"
-                || characterClass == "ADMIN")
-            {
-                results = true;
-                return results;
-            }
-            else
-            {
-                results = false;
-                return results;
-            }
-
-        }
-
-
-
         //Method for testing if theirs an upper-cased letter in a string, used for password validation
         public static bool TestUpper(string password)
         {

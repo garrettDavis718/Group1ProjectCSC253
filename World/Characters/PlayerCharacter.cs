@@ -16,12 +16,14 @@ namespace World
 
         public PlayerCharacter()
         {
-            
-        }
-        public PlayerCharacter(string name, string Pasword)
-        { 
-            Name = name;
-            Password = Password;
+            Name = "";
+            Password = "";
+            Race = "";
+            PlayerClass = "";
+            HealthPoints = 0;
+            ArmorClass = 0;
+            XLocation = 0;
+            YLocation = 0;
         }
         public PlayerCharacter(string name, string password, string race, string playerClass, int healthPoints, int armorClass, int xLocation, int yLocation) :
             base(name, healthPoints, armorClass, xLocation, yLocation)

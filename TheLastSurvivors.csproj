@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combat.cs" />
+    <Compile Include="CreateNewPlayer.cs" />
     <Compile Include="Info.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />

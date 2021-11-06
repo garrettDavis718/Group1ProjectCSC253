@@ -53,7 +53,6 @@
     <Compile Include="Arrays.cs" />
     <Compile Include="Characters\Character.cs" />
     <Compile Include="DatabaseControls.cs" />
-    <Compile Include="World Objects\Armor.cs" />
     <Compile Include="World Objects\Item.cs" />
     <Compile Include="Lists.cs" />
     <Compile Include="Characters\Mob.cs" />
