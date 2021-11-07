@@ -26,11 +26,11 @@ namespace World
         public static void CreateNewPlayer(PlayerCharacter user)
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
-            {
-                cnn.Execute("insert into Players (Name, Password, Race, Class, HealthPoints, ArmorClass, XLocation, YLocation) " +
+            { 
+                cnn.Execute("insert into Players (Name, Password, Race, PlayerClass, HealthPoints, ArmorClass, XLocation, YLocation) " +
                     "values (@Name, @Password, @Race, @PlayerClass, @HealthPoints, @ArmorClass, @XLocation, @YLocation)", user);
             }
-
+            
         }
         //method for saving the game of an existing player
         public static void SaveGame(PlayerCharacter user)
@@ -41,36 +41,6 @@ namespace World
                     "WHERE Name LIKE @Name AND Password LIKE @Password", user);
             }
         }
-        //Method that tests for existing user
-        public static bool CheckForUser(string userName, string userPass)
-        {
-            string connectionString = CreateConnectionString();
-            bool results;
-            string Command = "Select Count(*) FROM Players WHERE Name like @Name AND Password like @Password";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(Command, connection))
-            {
-                connection.Open();
-                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = userName;
-                cmd.Parameters.Add("@Password", SqlDbType.NVarChar, 15).Value = userPass;
-
-                int userCount = (int)cmd.ExecuteScalar();
-                if (userCount > 0)
-                {
-                    Console.WriteLine("This user already exists.");
-                    results = true;
-                }
-                else
-                {
-                    results = false;
-                }
-                return results;
-            }
-        }
-
-
-
-        //Method that will load items into our application
         public static List<Item> LoadItems()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
@@ -80,12 +50,18 @@ namespace World
             }
         }
         //Load Mobs List
-        public static List<Mob> LoadMobs()
+        public static void LoadMobs()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 var output = cnn.Query<Mob>("SELECT * FROM mobs", new DynamicParameters());
-                return output.ToList();
+                List<Mob> tempList = output.ToList();
+                foreach (Mob npc in tempList)
+                {
+                    Weapon weapon = Weapon.GetWeapon(npc);
+                    Mob mob = new Mob(npc.ID, npc.Name, npc.HealthPoints, npc.ArmorClass, npc.XLocation, npc.YLocation, weapon);
+                    Lists.Mobs.Add(mob);
+                }
             }
         }
         //Method that will load potions into our application
@@ -107,12 +83,12 @@ namespace World
             }
         }
         //Method that will load Weapons into our application
-        public static List<Weapon> LoadWeapons()
+        public static void LoadWeapons()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 var output = cnn.Query<Weapon>("SELECT * FROM Weapons", new DynamicParameters());
-                return output.ToList();
+                Lists.Weapons = output.ToList();
             }
         }
         //Method that will load KeyItems into our application
@@ -128,45 +104,60 @@ namespace World
 
 
         //Method to load rooms
-        public static List<Room> LoadRooms()
+        public static void LoadRooms()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 var output = cnn.Query<Room>("SELECT * From Rooms", new DynamicParameters());
-                return output.ToList();
+                Lists.rooms = output.ToList();
             }
         }
-
-        //method take in username and password and gets the rest of the user's information from the database (players table)
-        public static void LoadPlayer(string userName, string userPass)
+        //method that will load a player from the db, and inject them with a weapon depending on the character's class
+        public static bool LoadPlayer(string userName, string password)
         {
-            string connectionString = CreateConnectionString();
-            string query = "SELECT * FROM Players WHERE Name like @Name AND Password like @Password";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            PlayerCharacter user = new PlayerCharacter();
+            bool loaded;
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, connection))
+                var output = cnn.Query<PlayerCharacter>("SELECT * FROM Players WHERE Name Like @Name AND Password Like @Password", new { Name = userName, Password = password});
+                List<PlayerCharacter> tempList = new List<PlayerCharacter>();
+                tempList = output.ToList();
+                if (tempList.Count > 0)
                 {
-                    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 20).Value = userName;
-                    cmd.Parameters.Add("@Password", SqlDbType.NVarChar, 20).Value = userPass;
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        string PCName = dr["Name"].ToString();
-                        string PCPass = dr["Password"].ToString();
-                        int.TryParse(dr["HealthPoints"].ToString(), out int PCHP);
-                        int.TryParse(dr["ArmorClass"].ToString(), out int PCAC);
-                        int.TryParse(dr["XLocation"].ToString(), out int XLocation);
-                        int.TryParse(dr["YLocation"].ToString(), out int YLocation);
-                        string PCRace = dr["Race"].ToString();
-                        string PCClass = dr["PlayerClass"].ToString();
-
-                        PlayerCharacter user = new PlayerCharacter(PCName, PCPass, PCClass, PCRace, PCHP, PCAC, XLocation, YLocation);
-                        Lists.currentPlayer.Add(user);
-                    }
+                    user = new PlayerCharacter(tempList[0].Name, tempList[0].Password, tempList[0].Race, tempList[0].PlayerClass, tempList[0].HealthPoints,
+                        tempList[0].ArmorClass, tempList[0].XLocation, tempList[0].YLocation);
+                    Weapon weapon = Weapon.GetWeapon(user);
+                    user = new PlayerCharacter(tempList[0].Name, tempList[0].Password, tempList[0].Race, tempList[0].PlayerClass, tempList[0].HealthPoints,
+                        tempList[0].ArmorClass, tempList[0].XLocation, tempList[0].YLocation, weapon);
+                    loaded = true;
+                    Lists.currentPlayer.Add(user);
+                }
+                else 
+                {
+                    Console.WriteLine("Incorrect Credentials");
+                    loaded = false;
                 }
             }
+            return loaded;
+        }
+        //method that will check if a player exits and return the results as a bool
+        public static bool CheckForPlayer(string name)
+        {
+            bool results;
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                var output = cnn.Query<PlayerCharacter>("SELECT * from Players WHERE Name Like @Name", new { Name = name});
+                List<PlayerCharacter> tempList = output.ToList();
+                if (tempList.Count > 0)
+                {
+                    results = true;
+                }
+                else 
+                {
+                    results = false;
+                }
+            }
+            return results;
         }
     }
 }

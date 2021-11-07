@@ -24,13 +24,16 @@ namespace TheLastSurvivors
         //Fix weapons/attack functions for db update
         public static void Main(string[] args)
         {
-            ////Run my first menu for entering the game and gettin the player's information
-            //Menu.EntryMenu();
-            ////Call our main menu method for the primary decision structure of my program
-            //Menu.MainMenu();
-            PlayerCharacter user = CreateNewPlayer.CreateCharacter();
-            Console.WriteLine("Success");
-            Console.ReadLine();
+            DatabaseControls.LoadRooms();
+            DatabaseControls.LoadWeapons();
+            DatabaseControls.LoadMobs();
+            Map.BuildMap(Lists.rooms);
+            //Run my first menu for entering the game and gettin the player's information
+            Menu.GreetUser();
+            Menu.GameMenu();
+            //Call our main menu method for the primary decision structure of my program
+
+
         }
     }
 }

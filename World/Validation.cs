@@ -34,6 +34,21 @@ namespace World
             }
             return results;
         }
+        //method for validating name 
+        public static bool ValidateName(string name)
+        {
+            bool results;
+            if (name.Length >= 3 && name.Length < 12)
+            {
+                results = true;
+            }
+            else 
+            {
+                results = false;
+                Console.WriteLine("Incorrect input for name");
+            }
+            return results;
+        }
         //Method for testing if theirs an upper-cased letter in a string, used for password validation
         public static bool TestUpper(string password)
         {

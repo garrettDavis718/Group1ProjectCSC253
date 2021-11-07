@@ -8,7 +8,7 @@ namespace World
 {
     public static class Arrays
     {
-
+        public static Room[,] Map = new Room[20,20];
     }
     
 }
