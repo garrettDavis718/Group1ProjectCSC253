@@ -24,7 +24,7 @@ namespace TheLastSurvivors
         //Fix weapons/attack functions for db update
         public static void Main(string[] args)
         {
-            DatabaseControls.LoadRooms();
+            //DatabaseControls.LoadRooms();
             DatabaseControls.LoadWeapons();
             DatabaseControls.LoadMobs();
             Map.BuildMap(Lists.rooms);
