@@ -48,11 +48,13 @@ namespace TheLastSurvivors
                 }
             } while (choiceCheck == false);
         }
+        //General Game menu for character's decision, This has been rewritten to be a little cleaner
+        //Everytime we do something besides exit the game, we load our current enemies list, which is 
+        //a list of enemies that are at the same x and y location of our player. 
         public static void GameMenu()
         {
             bool keepGoing = true;
             PlayerCharacter user = Lists.currentPlayer[0];
-            Console.WriteLine(user.Weapon.Damage);
             Mob.GetCurrentEnemies();
             Console.WriteLine("Welcome " + user.Name + "!");
             Console.WriteLine("You are currently in " + Arrays.Map[user.XLocation, user.YLocation].Name);
@@ -100,6 +102,10 @@ namespace TheLastSurvivors
                         }
                         break;
                     case "look":
+                        //Look around and display the current room's description
+                        //ALso will create a list of current enemies for the user to see, 
+                        //Right now the max amount of enemies they will see is one,
+                        //That's just because of the limited enemy locations. 
                         Console.WriteLine(Arrays.Map[user.XLocation, user.YLocation].Name);
                         Console.WriteLine(Arrays.Map[user.XLocation, user.YLocation].Description);
                         foreach (Mob npc in Lists.CurrentEnemies)
@@ -115,6 +121,7 @@ namespace TheLastSurvivors
                         keepGoing = true;
                         break;
                 }
+                //Die option, ends the current game
                 if (user.HealthPoints < 0)
                 {
                     Console.WriteLine("You have died.");
@@ -125,6 +132,7 @@ namespace TheLastSurvivors
                     Console.WriteLine("You are currently in " + Arrays.Map[user.XLocation, user.YLocation].Name);
                 }
             } while (keepGoing == true);
+            //thank user for playing. 
             Console.WriteLine("Thanks for playing!");
             Console.ReadLine();
 

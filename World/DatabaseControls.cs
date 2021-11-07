@@ -32,7 +32,7 @@ namespace World
             }
             
         }
-        //method for saving the game of an existing player
+        //method for saving the game of an existing player, not really used yet
         public static void SaveGame(PlayerCharacter user)
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
@@ -41,6 +41,7 @@ namespace World
                     "WHERE Name LIKE @Name AND Password LIKE @Password", user);
             }
         }
+        //method to load items
         public static List<Item> LoadItems()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
@@ -49,7 +50,7 @@ namespace World
                 return output.ToList();
             }
         }
-        //Load Mobs List
+        //Load Mobs List and Load their specific weapons into their Object
         public static void LoadMobs()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
@@ -100,9 +101,6 @@ namespace World
                 return output.ToList();
             }
         }
-
-
-
         //Method to load rooms
         public static void LoadRooms()
         {
