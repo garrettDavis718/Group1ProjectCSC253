@@ -13,6 +13,7 @@ namespace World
         public int HealthPoints { get; set; }
         public int ArmorClass { get; set; }
         public int XLocation { get; set; }
+        public List<Item> Inventory { get; set; }
         public int YLocation { get; set; }
         public Weapon Weapon { get; set; }
         public Character()
@@ -30,6 +31,16 @@ namespace World
             ArmorClass = armorClass;
             XLocation = xLocation;
             YLocation = yLocation;
+        }
+        public Character(string name, int healthPoints, int armorClass, int xLocation, int yLocation, Weapon weapon, List<Item> inventory)
+        {
+            Name = name;
+            HealthPoints = healthPoints;
+            ArmorClass = armorClass;
+            XLocation = xLocation;
+            YLocation = yLocation;
+            Weapon = weapon;
+            Inventory = inventory;
         }
         public Character(string name, int healthPoints, int armorClass, int xLocation, int yLocation, Weapon weapon)
         {

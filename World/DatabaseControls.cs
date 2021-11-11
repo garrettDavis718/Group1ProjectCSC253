@@ -42,12 +42,12 @@ namespace World
             }
         }
         //method to load items
-        public static List<Item> LoadItems()
+        public static void LoadItems()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 var output = cnn.Query<Item>("SELECT * FROM Items", new DynamicParameters());
-                return output.ToList();
+                Lists.Items = output.ToList();
             }
         }
         //Load Mobs List and Load their specific weapons into their Object
@@ -117,6 +117,7 @@ namespace World
             bool loaded;
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
+                List<Item> inventory = new List<Item>();
                 var output = cnn.Query<PlayerCharacter>("SELECT * FROM Players WHERE Name Like @Name AND Password Like @Password", new { Name = userName, Password = password});
                 List<PlayerCharacter> tempList = new List<PlayerCharacter>();
                 tempList = output.ToList();
@@ -126,7 +127,7 @@ namespace World
                         tempList[0].ArmorClass, tempList[0].XLocation, tempList[0].YLocation);
                     Weapon weapon = Weapon.GetWeapon(user);
                     user = new PlayerCharacter(tempList[0].Name, tempList[0].Password, tempList[0].Race, tempList[0].PlayerClass, tempList[0].HealthPoints,
-                        tempList[0].ArmorClass, tempList[0].XLocation, tempList[0].YLocation, weapon);
+                        tempList[0].ArmorClass, tempList[0].XLocation, tempList[0].YLocation, weapon, inventory);
                     loaded = true;
                     Lists.currentPlayer.Add(user);
                 }

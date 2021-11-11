@@ -27,10 +27,13 @@ namespace TheLastSurvivors
             DatabaseControls.LoadRooms();
             DatabaseControls.LoadWeapons();
             DatabaseControls.LoadMobs();
+            DatabaseControls.LoadItems();
             Map.BuildMap(Lists.rooms);
             //Run my first menu for entering the game and gettin the player's information
             Menu.GreetUser();
-            Menu.GameMenu();
+            Room.getCharacters();
+            Console.ReadLine();
+            //Menu.GameMenu();
             //Call our main menu method for the primary decision structure of my program
 
 

@@ -13,6 +13,7 @@ namespace TheLastSurvivors
         public static void CreateCharacter()
         {
             Weapon weapon = new Weapon();
+            List<Item> inventory = new List<Item>();
             string passCheck;
             string password;
             string name;
@@ -131,7 +132,7 @@ namespace TheLastSurvivors
                 }
             } while (classCheck == false);
             Console.WriteLine(playerClass + " selected!");
-            PlayerCharacter user = new PlayerCharacter(name, password, race, playerClass, healthPoints, armorClass, xLocation, yLocation, weapon);
+            PlayerCharacter user = new PlayerCharacter(name, password, race, playerClass, healthPoints, armorClass, xLocation, yLocation, weapon, inventory);
             DatabaseControls.CreateNewPlayer(user);
             Lists.currentPlayer.Add(user);
 
