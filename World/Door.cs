@@ -10,8 +10,7 @@ namespace World
     {
         public int ID { get; set; }
         public int KeyID { get; set; }
-        public int XLocation { get; set; }
-        public int YLocation { get; set; }
+        public int RoomID { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; }
         public string Direction { get; set; }
@@ -19,12 +18,11 @@ namespace World
 
         public Door()
         { }
-        public Door(int id, int keyID, int xLocation, int yLocation, string name, string desc, string direction, string isLocked)
+        public Door(int id, int keyID, int roomID, string name, string desc, string direction, string isLocked)
         {
             ID = id;
             KeyID = keyID;
-            XLocation = xLocation;
-            YLocation = yLocation;
+            RoomID = roomID;
             Name = name;
             Desc = desc;
             Direction = direction;

@@ -13,7 +13,6 @@ namespace World
         //room properties
         private string _name;
         private string _description;
-        private string _exit;
         public List<Character> Characters { get; set; }
         public List<Item> Inventory { get; set; }
         public List<Door> Doors { get; set; }
@@ -26,7 +25,7 @@ namespace World
             Mob.GetCurrentEnemies();
             List<Character> character = new List<Character>();
             Room currentRoom = Arrays.Map[Lists.currentPlayer[0].XLocation, Lists.currentPlayer[0].YLocation];
-            currentRoom = new Room(currentRoom.Name, currentRoom.Description, currentRoom.Exit, currentRoom.XLocation,
+            currentRoom = new Room(currentRoom.Name, currentRoom.Description, currentRoom.XLocation,
                 currentRoom.YLocation, character);
             currentRoom.Characters.Add(Lists.currentPlayer[0]);
             foreach (Mob npc in Lists.CurrentEnemies)
@@ -37,30 +36,27 @@ namespace World
         }
 
         //room constructor
-        public Room(string name, string description, string exit, int xLocation, int yLocation, string enemy)
+        public Room(string name, string description, int xLocation, int yLocation, string enemy)
         {
             _name = name;
             _description = description;
-            _exit = exit;
             XLocation = xLocation;
             YLocation = yLocation;
 
         }
-        public Room(string name, string description, string exit, int xLocation, int yLocation, List<Character> characters)
+        public Room(string name, string description, int xLocation, int yLocation, List<Character> characters)
         {
             _name = name;
             _description = description;
-            _exit = exit;
             XLocation = xLocation;
 
             YLocation = yLocation;
             Characters = characters;
         }
-        public Room(string name, string description, string exit, int xLocation, int yLocation, List<Character> characters, List<Item> inventory)
+        public Room(string name, string description, int xLocation, int yLocation, List<Character> characters, List<Item> inventory)
         {
             _name = name;
             _description = description;
-            _exit = exit;
             XLocation = xLocation;
             Inventory = inventory;
             YLocation = yLocation;
@@ -93,13 +89,6 @@ namespace World
             set { _description = value; }
         }
 
-
-
-        public string Exit
-        {
-            get { return _exit; }
-            set { _exit = value; }
-        }
         //method to get the current room based on the roomindex paramter
         public static Room GetRoom(int roomIndex)
         {
