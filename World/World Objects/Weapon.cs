@@ -15,6 +15,12 @@ namespace World
         {
 
         }
+        public Weapon(string dmgType, int damage, int id, double weight, string name, string desc, int locationID) :
+            base(id, name, weight, desc, locationID)
+        {
+            DmgType = dmgType;
+            Damage = damage;
+        }
         public Weapon(string dmgType, int damage, int id, double weight, string name, string desc) :
             base(id, name, weight, desc)
         {

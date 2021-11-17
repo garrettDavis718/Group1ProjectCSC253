@@ -15,6 +15,11 @@ namespace World
         {
 
         }
+        public Potion(int healthPoints, int id, double weight, string name, string desc, int locationID) :
+            base(id, name, weight, desc, locationID)
+        {
+            HealthPoints = healthPoints;
+        }
         public Potion(int healthPoints, int id, double weight, string name, string desc) :
             base(id, name, weight, desc)
         {

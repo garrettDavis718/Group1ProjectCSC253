@@ -54,6 +54,7 @@
     <Compile Include="Arrays.cs" />
     <Compile Include="Characters\Character.cs" />
     <Compile Include="DatabaseControls.cs" />
+    <Compile Include="Door.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="World Objects\Item.cs" />
     <Compile Include="Lists.cs" />

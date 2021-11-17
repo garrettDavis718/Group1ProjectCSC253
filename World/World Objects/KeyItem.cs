@@ -12,6 +12,14 @@ namespace World
         {
             
         }
+        public KeyItem(int id, double weight, string name, string desc, int locationID) :
+            base(id, name, weight, desc, locationID)
+        {
+            ID = id;
+            Name = name;
+            Desc = desc;
+            Weight = weight;
+        }
         public KeyItem(int id, double weight, string name, string desc) : 
             base(id, name, weight, desc)
         {

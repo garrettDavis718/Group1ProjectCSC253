@@ -9,6 +9,17 @@ namespace World
     //This Class will build our map and populat our map array with the rooms from out db.
     public class Map
     {
+        //Method will load items with a locationID to their respective rooms
+        public static void LoadMapItems()
+        {
+            foreach (Item item in Lists.Items)
+            {
+                if (item.LocationID > -1)
+                {
+                    Lists.rooms[item.LocationID].Inventory.Add(item);
+                }
+            }
+        }
         public static void BuildMap(List<Room> rooms)
         {
             for (int x = 0; x < 20; x++)
@@ -24,8 +35,13 @@ namespace World
                 Arrays.Map[var.XLocation, var.YLocation] = var;
             }
         }
+        //Method for getting the player location
+        public static Room GetLocation(PlayerCharacter user)
+        {
+            return Arrays.Map[user.XLocation, user.YLocation];
+        }
         //method for moving characters(pc/npc) to a desired location w/ validation
-        //BUG if location is < 0 break
+        
         public static string MoveCharacter(Character character, string direction)
         {
             string output = " ";

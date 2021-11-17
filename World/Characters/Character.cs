@@ -16,6 +16,7 @@ namespace World
         public List<Item> Inventory { get; set; }
         public int YLocation { get; set; }
         public Weapon Weapon { get; set; }
+        public double Weight { get; set; }
         public Character()
         {
             
@@ -42,6 +43,17 @@ namespace World
             Weapon = weapon;
             Inventory = inventory;
         }
+        public Character(string name, int healthPoints, int armorClass, int xLocation, int yLocation, Weapon weapon, List<Item> inventory, int weight)
+        {
+            Name = name;
+            HealthPoints = healthPoints;
+            ArmorClass = armorClass;
+            XLocation = xLocation;
+            YLocation = yLocation;
+            Weapon = weapon;
+            Inventory = inventory;
+            Weight = weight;
+        }
         public Character(string name, int healthPoints, int armorClass, int xLocation, int yLocation, Weapon weapon)
         {
             Name = name;
@@ -57,6 +69,13 @@ namespace World
             HealthPoints = healthPoints;
             ArmorClass = armorClass;
         }
-
+        public void GetWeight(PlayerCharacter user)
+        {
+            foreach (Item item in Inventory)
+            {
+                user.Weight += item.Weight;
+            }
+        }
+        
     }
 }

@@ -16,6 +16,7 @@ namespace World
         private string _exit;
         public List<Character> Characters { get; set; }
         public List<Item> Inventory { get; set; }
+        public List<Door> Doors { get; set; }
         public int XLocation { get; set; }
         public int YLocation { get; set; }
 
@@ -107,22 +108,5 @@ namespace World
         }
 
 
-
-        //method to get the current room's index based on which way the user decided to move
-        public static int MoveRoom(int roomIndex, string direction)
-        {
-            direction = direction.ToLower();
-
-            if ((direction == "n" || direction == "north") && roomIndex < 19)
-            {
-                roomIndex++;
-            }
-            else if ((direction == "s" || direction == "south") && roomIndex > 0)
-            {
-                roomIndex--;
-            }
-            else { };         
-            return roomIndex;
-        }        
     }
 }

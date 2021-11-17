@@ -110,6 +110,15 @@ namespace World
                 Lists.rooms = output.ToList();
             }
         }
+        //Method to load doors
+        public static void LoadDoors()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                var output = cnn.Query<Door>("SELECT * From Doors", new DynamicParameters());
+                Lists.Doors = output.ToList();
+            }
+        }
         //method that will load a player from the db, and inject them with a weapon depending on the character's class
         public static bool LoadPlayer(string userName, string password)
         {

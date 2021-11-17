@@ -15,6 +15,11 @@ namespace World
         {
             
         }
+        public Treasure(double value, int id, double weight, string name, string desc, int locationID) :
+            base(id, name, weight, desc, locationID)
+        {
+            Value = value;
+        }
         public Treasure(double value, int id, double weight, string name, string desc) :
             base(id, name, weight, desc)
         {
