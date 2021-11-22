@@ -101,15 +101,6 @@ namespace World
                 return output.ToList();
             }
         }
-        //Method to load rooms
-        public static void LoadRooms()
-        {
-            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
-            {
-                var output = cnn.Query<Room>("SELECT * From Rooms", new DynamicParameters());
-                Lists.rooms = output.ToList();
-            }
-        }
         //Method to load doors
         public static void LoadDoors()
         {
@@ -117,6 +108,15 @@ namespace World
             {
                 var output = cnn.Query<Door>("SELECT * From Doors", new DynamicParameters());
                 Lists.Doors = output.ToList();
+            }
+        }
+        //Method to load rooms
+        public static void LoadRooms()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
+            {
+                var output = cnn.Query<Room>("SELECT * From Rooms", new DynamicParameters());
+                Lists.rooms = output.ToList();
             }
         }
         //method that will load a player from the db, and inject them with a weapon depending on the character's class

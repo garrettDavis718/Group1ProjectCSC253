@@ -9,17 +9,7 @@ namespace World
     //This Class will build our map and populat our map array with the rooms from out db.
     public class Map
     {
-        //Method will load items with a locationID to their respective rooms
-        public static void LoadMapItems()
-        {
-            foreach (Item item in Lists.Items)
-            {
-                if (item.LocationID > -1)
-                {
-                    Lists.rooms[item.LocationID].Inventory.Add(item);
-                }
-            }
-        }
+        
         public static void BuildMap(List<Room> rooms)
         {
             for (int x = 0; x < 20; x++)

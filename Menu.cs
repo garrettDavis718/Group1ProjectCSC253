@@ -61,19 +61,30 @@ namespace TheLastSurvivors
             Console.WriteLine("The " + Arrays.Map[user.XLocation, user.YLocation].Name + " is " + Arrays.Map[user.XLocation, user.YLocation].Description);
             do
             {
-                
                 Mob.GetCurrentEnemies();
                 Console.WriteLine("What would you like to do? ");
                 Console.WriteLine("---------------------");
                 string decision = Console.ReadLine().ToLower();
                 switch (decision)
                 {
-                    case "move":
-                        Console.WriteLine("Which way would you like to move? ");
-                        Console.WriteLine("---------------------");
-                        string direction = Console.ReadLine();
-                        string output = Map.MoveCharacter(user, direction);
-                        Console.WriteLine(output);
+                    //This will let us use move x as a move input
+                    case string a when a.Contains("move"):
+                        string direction;
+                        if (decision.Contains(' '))
+                        {
+                            string[] twoWordDecision = decision.Split(' ');
+                            direction = twoWordDecision[1];
+                            string output = Map.MoveCharacter(user, direction);
+                            Console.WriteLine(output);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Which way would you like to move? ");
+                            Console.WriteLine("---------------------");
+                            direction = Console.ReadLine();
+                            string output = Map.MoveCharacter(user, direction);
+                            Console.WriteLine(output);
+                        }
                         keepGoing = true;
                         break;
                     case "attack":
@@ -112,6 +123,36 @@ namespace TheLastSurvivors
                         {
                             Console.WriteLine("Enemies: ");
                             Console.WriteLine(npc.Name);
+                        }
+                        break;
+                    case string a when a.Contains("look at"):
+                        string[] choices = decision.Split(' ');
+                        string interest = choices[2];
+                        foreach(Character character in Lists.CurrentEnemies) 
+                        {
+                            if (character.Name.ToLower().Equals(interest))
+                            {
+                                Console.WriteLine("You see a " + character.Name + " with " + character.HealthPoints + ".");
+                                Console.WriteLine("The " + character.Name + " is holding a " + character.Weapon.Name);
+                            }
+                            else
+                            {
+                                Console.WriteLine("There is no enemy by that name here.");
+                            }
+                        }
+                        break;
+                        //All 3 of these cases do the same thing
+                    case "take":
+                    case "pickup":
+                    case "grab":
+                        Console.WriteLine("What would you like to pickup?");
+                        string input = Console.ReadLine().ToLower();
+                        foreach (Item item in Arrays.Map[user.XLocation, user.YLocation].Inventory)
+                        {
+                            if (input.Equals(item.Name.ToLower()))
+                            {
+                                Item.TakeItem(item, user);
+                            }
                         }
                         break;
                     case "exit":

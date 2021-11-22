@@ -9,6 +9,7 @@ namespace World
     public static class Lists
     {
         public static List<PlayerCharacter> currentPlayer = new List<PlayerCharacter>();
+        public static List<Room> currentRoom = new List<Room>();
         public static List<Room> rooms = new List<Room>();
         public static List<Mob> Mobs = new List<Mob>();
         public static List<Treasure> Treasures = new List<Treasure>();

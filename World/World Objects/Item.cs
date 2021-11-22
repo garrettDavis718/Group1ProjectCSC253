@@ -55,7 +55,7 @@ namespace World
                 }
             }
         }
-        public void TakeItem(Item item, PlayerCharacter user)
+        public static void TakeItem(Item item, PlayerCharacter user)
         {
             if (user.Weight < 50)
             {
@@ -67,6 +67,17 @@ namespace World
                 Console.WriteLine("You are too heavy to pick this item up.");
             }
         }
+        //Method will load items with a locationID to their respective rooms
+        //public static void LoadMapItems()
+        //{
+        //    foreach (Item item in Lists.Items)
+        //    {
+        //        if (item.LocationID.Equals())
+        //        {
+        //            Lists.rooms[item.LocationID + 1].Inventory.Add(item);
+        //        }
+        //    }
+        //}
 
 
 
