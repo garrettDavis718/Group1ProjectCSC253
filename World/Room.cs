@@ -16,6 +16,7 @@ namespace World
         public List<Character> Characters { get; set; }
         public List<Item> Inventory { get; set; }
         public List<Door> Doors { get; set; }
+        public int ID { get; set; }
         public int XLocation { get; set; }
         public int YLocation { get; set; }
 
@@ -36,13 +37,14 @@ namespace World
         }
 
         //room constructor
-        public Room(string name, string description, int xLocation, int yLocation, string enemy)
+        public Room(string name, string description, int xLocation, int yLocation, int id)
         {
+            
             _name = name;
             _description = description;
             XLocation = xLocation;
             YLocation = yLocation;
-
+            ID = id;
         }
         public Room(string name, string description, int xLocation, int yLocation, List<Character> characters)
         {
@@ -61,6 +63,16 @@ namespace World
             Inventory = inventory;
             YLocation = yLocation;
             Characters = characters;
+        }
+        public Room(string name, string description, int xLocation, int yLocation, int id, List<Character> characters, List<Item> inventory)
+        {
+            _name = name;
+            _description = description;
+            XLocation = xLocation;
+            Inventory = inventory;
+            YLocation = yLocation;
+            Characters = characters;
+            ID = id;
         }
 
         public Room(string name)
@@ -94,6 +106,34 @@ namespace World
         {
             Room currentRoom = Lists.rooms[roomIndex];
             return currentRoom;
+        }
+        //Method will load items with a locationID to their respective rooms
+        public static void LoadRoomsItems()
+        {
+            foreach (Room room in Lists.rooms)
+            {
+                foreach (Item item in Lists.Items)
+                {
+                    if (room.ID.Equals(item.LocationID))
+                    {
+                        room.Inventory.Add(item);
+                    }
+                }
+            }
+        }
+        //Method will load weapons into the map at their respective locationID
+        public static void LoadRoomsWeapons()
+        {
+            foreach (Room room in Lists.rooms)
+            {
+                foreach (Weapon weapon in Lists.Weapons)
+                {
+                    if (room.ID.Equals(weapon.LocationID))
+                    {
+                        room.Inventory.Add(weapon);
+                    }
+                }
+            }
         }
 
 

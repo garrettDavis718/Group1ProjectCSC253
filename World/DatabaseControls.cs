@@ -115,8 +115,15 @@ namespace World
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
+                List<Character> characters = new List<Character>();
+                List<Item> inventory = new List<Item>();
                 var output = cnn.Query<Room>("SELECT * From Rooms", new DynamicParameters());
                 Lists.rooms = output.ToList();
+                for (int i = 0; i < Lists.rooms.Count; i++)
+                {
+                    Lists.rooms[i] = new Room(Lists.rooms[i].Name, Lists.rooms[i].Description, Lists.rooms[i].XLocation,
+                        Lists.rooms[i].YLocation, Lists.rooms[i].ID, characters, inventory);
+                }
             }
         }
         //method that will load a player from the db, and inject them with a weapon depending on the character's class

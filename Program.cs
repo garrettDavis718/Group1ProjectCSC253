@@ -21,8 +21,7 @@ namespace TheLastSurvivors
 {
     public class Program
     {
-        //Load Objects from Database
-        //Fix weapons/attack functions for db update
+        
         public static void Main(string[] args)
         {
             DatabaseControls.LoadRooms();
@@ -30,7 +29,8 @@ namespace TheLastSurvivors
             DatabaseControls.LoadWeapons();
             DatabaseControls.LoadMobs();
             DatabaseControls.LoadItems();
-            //Item.LoadMapItems();
+            Room.LoadRoomsWeapons();
+            Room.LoadRoomsItems();
             Map.BuildMap(Lists.rooms);
             //Run my first menu for entering the game and gettin the player's information
             Menu.GreetUser();

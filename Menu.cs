@@ -152,6 +152,7 @@ namespace TheLastSurvivors
                             if (input.Equals(item.Name.ToLower()))
                             {
                                 Item.TakeItem(item, user);
+                                Console.WriteLine("You've picked up " + item.Name);
                             }
                         }
                         break;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace World
 {
-    //This Class will build our map and populat our map array with the rooms from out db.
+    //This Class will build our map and populate our map array with the rooms from out db.
     public class Map
     {
         

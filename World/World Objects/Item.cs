@@ -42,6 +42,7 @@ namespace World
             Weight = weight;
             Name = name;
             Desc = desc;
+            LocationID = locationID;
         }
         public void DropItem(Item droppedItem, PlayerCharacter user)
         {
@@ -67,17 +68,8 @@ namespace World
                 Console.WriteLine("You are too heavy to pick this item up.");
             }
         }
-        //Method will load items with a locationID to their respective rooms
-        //public static void LoadMapItems()
-        //{
-        //    foreach (Item item in Lists.Items)
-        //    {
-        //        if (item.LocationID.Equals())
-        //        {
-        //            Lists.rooms[item.LocationID + 1].Inventory.Add(item);
-        //        }
-        //    }
-        //}
+        
+        
 
 
 
