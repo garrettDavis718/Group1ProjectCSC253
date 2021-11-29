@@ -5,10 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using World;
+using static World.WorldDelegates;
 namespace TheLastSurvivors
 {
     public class Menu
     {
+        ShowUserMessage message1 = Write;
+        ShowUserMessage message2 = WriteLine;
+
         //GreetUser Menu for greeting every user, will create new player and will load already created players
         public static void GreetUser()
         {
