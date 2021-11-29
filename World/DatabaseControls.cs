@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static World.WorldDelegates;
 
 
 namespace World
@@ -16,6 +17,8 @@ namespace World
     //This is my databasecontrols class, We control info within our database from here
     public class DatabaseControls
     {
+        ShowUserMessage message1 = Write;
+        ShowUserMessage message2 = WriteLine;
 
         //connectstring setup
         public static string CreateConnectionString(string id = "Default")
@@ -153,7 +156,7 @@ namespace World
                 }
                 else 
                 {
-                    Console.WriteLine("Incorrect Credentials");
+                    WriteLine("Incorrect Credentials");
                     loaded = false;
                 }
             }

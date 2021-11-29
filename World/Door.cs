@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static World.WorldDelegates;
 
 namespace World
 {
     public class Door
     {
+        ShowUserMessage message1 = Write;
+        ShowUserMessage message2 = WriteLine;
+
         public int ID { get; set; }
         public int KeyID { get; set; }
         public int RoomID { get; set; }
@@ -48,7 +52,7 @@ namespace World
             }
             else
             {
-                Console.WriteLine("This is the wrong key.");
+                WriteLine("This is the wrong key.");
             }
         }
         public static bool CheckIfDoorLocked(int x, int y, string direction)

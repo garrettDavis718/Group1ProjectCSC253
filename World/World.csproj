@@ -72,6 +72,7 @@
     <Compile Include="World Objects\Treasure.cs" />
     <Compile Include="Validation.cs" />
     <Compile Include="World Objects\Weapon.cs" />
+    <Compile Include="WorldDelegates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

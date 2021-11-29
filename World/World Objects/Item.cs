@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static World.WorldDelegates;
 
 namespace World
 {
     //Item Class used for creating item objects and storing them in our item list, will be used in future iterations
     public class Item
     {
+        ShowUserMessage message1 = Write;
+        ShowUserMessage message2 = WriteLine;
+
         //constructors
         public int ID { get; set; }
         public double Weight { get; set; }
@@ -70,7 +74,7 @@ namespace World
             else
             {
                 //Console writeline, needs fix
-                Console.WriteLine("You are too heavy to pick this item up.");
+                WriteLine("You are too heavy to pick this item up.");
             }
             
         }

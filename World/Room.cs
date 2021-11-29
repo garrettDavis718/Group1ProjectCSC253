@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using static World.WorldDelegates;
 
 namespace World
 {
     //room class
     public class Room
     {
+        ShowUserMessage message1 = Write;
+        ShowUserMessage message2 = WriteLine;
+
         //room properties
         private string _name;
         private string _description;
