@@ -87,29 +87,50 @@ namespace TheLastSurvivors
                         }
                         keepGoing = true;
                         break;
-                    case "attack":
+                    case string a when a.Contains("attack"):
                         int counter = 0;
-                        Console.WriteLine("Who would you like to attack? ");
-                        foreach (Mob npc in Lists.CurrentEnemies)
+                        string enemyChoice = "";
+                        if (decision.Contains(' '))
                         {
-                            Console.WriteLine(npc.Name);
-                        }
-                        string enemy = Console.ReadLine().ToLower();
-                        foreach (Mob npc in Lists.CurrentEnemies)
-                        {
-                            if (npc.Name.ToLower().Equals(enemy))
+                            string[] twoWordDecision = decision.Split(' ');
+                            enemyChoice = twoWordDecision[1];
+                            foreach (Mob npc in Lists.CurrentEnemies)
                             {
-                                npc.HealthPoints = Combat.attack(Lists.currentPlayer[0], npc);
-                                if (npc.HealthPoints > 0)
+                                if (npc.Name.ToLower().Equals(enemyChoice))
                                 {
-                                    Lists.currentPlayer[0].HealthPoints = Combat.attack(npc, Lists.currentPlayer[0]);
-                                } 
-                                counter++;
+                                    npc.HealthPoints = Combat.attack(user, npc);
+                                    if (npc.HealthPoints > 0)
+                                    {
+                                        Lists.currentPlayer[0].HealthPoints = Combat.attack(npc, user);
+                                        break;
+                                    }
+                                }
                             }
                         }
-                        if (counter == 0)
+                        else
                         {
-                            Console.WriteLine("No enemy exists.");
+                            Console.WriteLine("Who would you like to attack? ");
+                            foreach (Mob npc in Lists.CurrentEnemies)
+                            {
+                                Console.WriteLine(npc.Name);
+                            }
+                            string enemy = Console.ReadLine().ToLower();
+                            foreach (Mob npc in Lists.CurrentEnemies)
+                            {
+                                if (npc.Name.ToLower().Equals(enemy))
+                                {
+                                    npc.HealthPoints = Combat.attack(user, npc);
+                                    if (npc.HealthPoints > 0)
+                                    {
+                                        Lists.currentPlayer[0].HealthPoints = Combat.attack(npc, user);
+                                    }
+                                    counter++;
+                                }
+                            }
+                            if (counter == 0)
+                            {
+                                Console.WriteLine("No enemy exists.");
+                            }
                         }
                         break;
                     case "look":
@@ -127,32 +148,119 @@ namespace TheLastSurvivors
                         break;
                     case string a when a.Contains("look at"):
                         string[] choices = decision.Split(' ');
-                        string interest = choices[2];
-                        foreach(Character character in Lists.CurrentEnemies) 
+                        if (choices.Length > 2)
                         {
-                            if (character.Name.ToLower().Equals(interest))
+                            string interest = choices[2];
+                            if (choices.Length > 3)
                             {
-                                Console.WriteLine("You see a " + character.Name + " with " + character.HealthPoints + ".");
-                                Console.WriteLine("The " + character.Name + " is holding a " + character.Weapon.Name);
+                                interest += ' ';
+                                interest += choices[3];
+                                Console.WriteLine(interest);
                             }
-                            else
+                            
+                            foreach (Character character in Lists.CurrentEnemies)
                             {
-                                Console.WriteLine("There is no enemy by that name here.");
+                                if (character.Name.ToLower().Equals(interest.ToLower()))
+                                {
+                                    Console.WriteLine("You see a " + character.Name + " with " + character.HealthPoints + "health points.");
+                                    Console.WriteLine("The " + character.Name + " is holding a " + character.Weapon.Name);
+                                }
+
                             }
+                            foreach (Item item in Arrays.Map[user.XLocation, user.YLocation].Inventory)
+                            {
+                                Console.WriteLine(item.Name.ToLower());
+                                Console.WriteLine(item.Desc);
+                                if (item.Name.ToLower().Equals(interest.ToLower()))
+                                {
+                                    Console.WriteLine(item.Desc);
+                                }
+                            }
+                            foreach (Door door in Arrays.Map[user.XLocation, user.YLocation].Doors)
+                            {
+                                if (door.Name.ToLower().Equals(interest.ToLower()))
+                                {
+                                    Console.WriteLine(door.Desc);
+                                }
+                            }
+
                         }
                         break;
                         //All 3 of these cases do the same thing
                     case "take":
                     case "pickup":
                     case "grab":
+                        if (Arrays.Map[user.XLocation, user.YLocation].Inventory.Count.Equals(0) || 
+                            Arrays.Map[user.XLocation, user.YLocation].Inventory[0].Name.Equals("Default"))                             
+                        {
+                            Console.WriteLine("Nothing to pickup");
+                            break;
+                        }
                         Console.WriteLine("What would you like to pickup?");
+                        if (Arrays.Map[user.XLocation, user.YLocation].Inventory.Count > 0)
+                        {
+                            foreach (Item item in Arrays.Map[user.XLocation, user.YLocation].Inventory)
+                            {
+                                Console.WriteLine(item.Name);
+                            }
+                        }
+                        
                         string input = Console.ReadLine().ToLower();
+                        Item takenItem = new Item();
                         foreach (Item item in Arrays.Map[user.XLocation, user.YLocation].Inventory)
                         {
                             if (input.Equals(item.Name.ToLower()))
                             {
+                                takenItem = item;
                                 Item.TakeItem(item, user);
+                                
                                 Console.WriteLine("You've picked up " + item.Name);
+                            }
+                        }
+                        for (int i = 0; i < Arrays.Map[user.XLocation, user.YLocation].Inventory.Count; i++)
+                        {
+                            int count = 0;
+                            if (count < 1 && Arrays.Map[user.XLocation, user.YLocation].Inventory[i].Equals(takenItem))
+                            {
+                                Arrays.Map[user.XLocation, user.YLocation].Inventory.RemoveAt(i);
+                                count++;
+                            }
+                        }
+
+                        break;
+                    case "drop":
+                        Console.WriteLine("   Inventory   ");
+                        Console.WriteLine("----------------");
+                        foreach (Item item in user.Inventory)
+                        {
+                            Console.WriteLine(item.Name);
+                        }
+                        string droppedItem = Console.ReadLine();
+                        Item.DropItem(droppedItem, user);
+                        break;
+                    case "use":
+                        Console.WriteLine("What would you like to use? ");
+                        foreach (Item item in user.Inventory)
+                        {
+                            Console.WriteLine(item.Name); 
+                        }
+                        string usedItem = Console.ReadLine();
+                        string doorChoice = "";
+                        KeyItem keyChoice = new KeyItem();
+                        foreach (Item item in user.Inventory)
+                        {
+                            if (usedItem.ToLower().Equals(item.Name.ToLower()))
+                            {
+                                keyChoice = KeyItem.GetKeyItem(usedItem);
+                                Console.WriteLine("What would you like to use the " + item.Name + " on? " );
+                                doorChoice = Console.ReadLine();
+                            }
+                        }
+                        foreach (Door door in Arrays.Map[user.XLocation, user.YLocation].Doors)
+                        {
+                            if (doorChoice.ToLower().Equals(door.Name.ToLower()))
+                            {
+                                Door.UnlockDoor(door, keyChoice, user);
                             }
                         }
                         break;
