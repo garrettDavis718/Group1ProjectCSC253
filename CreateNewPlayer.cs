@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using World;
+using static World.WorldDelegates;
 
 namespace TheLastSurvivors
 {
     public class CreateNewPlayer
     {
+        ShowUserMessage message1 = Write;
+        ShowUserMessage message2 = WriteLine;
+
         //method for creating a new player
         public static void CreateCharacter()
         {
@@ -25,9 +29,9 @@ namespace TheLastSurvivors
             bool classCheck;
             bool nameCheck;
             bool nameValid;
-            Console.WriteLine("        Create New Player        ");
-            Console.WriteLine("=================================");
-            Console.WriteLine("Enter Character Name: ");
+            WriteLine("        Create New Player        ");
+            WriteLine("=================================");
+            WriteLine("Enter Character Name: ");
             do
             {
                 name = Console.ReadLine();
@@ -35,25 +39,25 @@ namespace TheLastSurvivors
                 nameValid = Validation.ValidateName(name);
                 if (nameCheck == false && nameValid == true)
                 {
-                    Console.WriteLine(name + " Available!");
+                    WriteLine(name + " Available!");
                 }
                 else 
                 {
-                    Console.WriteLine(name + " is unavailable. Please try again");
+                    WriteLine(name + " is unavailable. Please try again");
                 }
             } while (nameCheck == true || nameValid == false);
             do
             {
-                Console.WriteLine("Enter player password: ");
+                WriteLine("Enter player password: ");
                 password = Console.ReadLine();
                 passCheck = Validation.TestPassword(password);
-                Console.WriteLine(passCheck);
+                WriteLine(passCheck);
             } while (passCheck != "Taken!");
-            Console.WriteLine("What race is your character? (Input Number Choice)");
-            Console.WriteLine("1. Human");
-            Console.WriteLine("2. Mutant");
-            Console.WriteLine("3. Alien");
-            Console.WriteLine("4. Robot");
+            WriteLine("What race is your character? (Input Number Choice)");
+            WriteLine("1. Human");
+            WriteLine("2. Mutant");
+            WriteLine("3. Alien");
+            WriteLine("4. Robot");
             string race = Console.ReadLine();
             //race choices
             do
@@ -77,19 +81,19 @@ namespace TheLastSurvivors
                         raceCheck = true;
                         break;
                     default:
-                        Console.WriteLine("Incorrect input. Please enter 1-4:");
+                        WriteLine("Incorrect input. Please enter 1-4:");
                         race = Console.ReadLine();
                         raceCheck = false;
                         break;
                 }
             } while (raceCheck == false);
-            Console.WriteLine(race + " selected!");
+            WriteLine(race + " selected!");
             //Class Choices
-            Console.WriteLine("Choose your Class:  (input number choice)");
-            Console.WriteLine("1. Berzerker");
-            Console.WriteLine("2. Gunslinger");
-            Console.WriteLine("3. Scrapper");
-            Console.WriteLine("4. Engineer");
+            WriteLine("Choose your Class:  (input number choice)");
+            WriteLine("1. Berzerker");
+            WriteLine("2. Gunslinger");
+            WriteLine("3. Scrapper");
+            WriteLine("4. Engineer");
             string playerClass = Console.ReadLine();
             playerClass.ToLower();
             do
@@ -126,12 +130,12 @@ namespace TheLastSurvivors
                         break;
                     default:
                         classCheck = false;
-                        Console.WriteLine("Incorrect input. Please enter 1-4");
+                        WriteLine("Incorrect input. Please enter 1-4");
                         Console.ReadLine();
                         break;
                 }
             } while (classCheck == false);
-            Console.WriteLine(playerClass + " selected!");
+            WriteLine(playerClass + " selected!");
             PlayerCharacter user = new PlayerCharacter(name, password, race, playerClass, healthPoints, armorClass, xLocation, yLocation, weapon, inventory);
             DatabaseControls.CreateNewPlayer(user);
             Lists.currentPlayer.Add(user);

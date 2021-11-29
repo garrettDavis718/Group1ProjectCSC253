@@ -20,8 +20,8 @@ namespace TheLastSurvivors
             bool loaded;
             bool choiceCheck;
             PlayerCharacter user = new PlayerCharacter();
-            Console.WriteLine("------------Welcome to The Last Survivors!------------");
-            Console.WriteLine("Is this your first time playing? ");
+            WriteLine("------------Welcome to The Last Survivors!------------");
+            WriteLine("Is this your first time playing? ");
             choice = Console.ReadLine();
             choice.ToLower();
             do
@@ -32,13 +32,13 @@ namespace TheLastSurvivors
                         do
                         {
                             choiceCheck = true;
-                            Console.WriteLine("Whats your name?");
+                            WriteLine("Whats your name?");
                             string name = Console.ReadLine();
-                            Console.WriteLine("What's your password? ");
+                            WriteLine("What's your password? ");
                             string password = Console.ReadLine();
                             loaded = DatabaseControls.LoadPlayer(name, password);
                         } while (loaded == false);
-                        Console.WriteLine(Lists.currentPlayer[0].Name + " loaded.");
+                        WriteLine(Lists.currentPlayer[0].Name + " loaded.");
                         break;
                     case "yes":
                         choiceCheck = true;
@@ -46,7 +46,7 @@ namespace TheLastSurvivors
                         break;
                     default:
                         choiceCheck = false;
-                        Console.WriteLine("Please enter yes or no.");
+                        WriteLine("Please enter yes or no.");
                         choice = Console.ReadLine();
                         break;
                 }
@@ -60,14 +60,14 @@ namespace TheLastSurvivors
             bool keepGoing = true;
             PlayerCharacter user = Lists.currentPlayer[0];
             Mob.GetCurrentEnemies();
-            Console.WriteLine("Welcome " + user.Name + "!");
-            Console.WriteLine("You are currently in " + Arrays.Map[user.XLocation, user.YLocation].Name);
-            Console.WriteLine("The " + Arrays.Map[user.XLocation, user.YLocation].Name + " is " + Arrays.Map[user.XLocation, user.YLocation].Description);
+            WriteLine("Welcome " + user.Name + "!");
+            WriteLine("You are currently in " + Arrays.Map[user.XLocation, user.YLocation].Name);
+            WriteLine("The " + Arrays.Map[user.XLocation, user.YLocation].Name + " is " + Arrays.Map[user.XLocation, user.YLocation].Description);
             do
             {
                 Mob.GetCurrentEnemies();
-                Console.WriteLine("What would you like to do? ");
-                Console.WriteLine("---------------------");
+                WriteLine("What would you like to do? ");
+                WriteLine("---------------------");
                 string decision = Console.ReadLine().ToLower();
                 switch (decision)
                 {
@@ -79,24 +79,24 @@ namespace TheLastSurvivors
                             string[] twoWordDecision = decision.Split(' ');
                             direction = twoWordDecision[1];
                             string output = Map.MoveCharacter(user, direction);
-                            Console.WriteLine(output);
+                            WriteLine(output);
                         }
                         else
                         {
-                            Console.WriteLine("Which way would you like to move? ");
-                            Console.WriteLine("---------------------");
+                            WriteLine("Which way would you like to move? ");
+                            WriteLine("---------------------");
                             direction = Console.ReadLine();
                             string output = Map.MoveCharacter(user, direction);
-                            Console.WriteLine(output);
+                            WriteLine(output);
                         }
                         keepGoing = true;
                         break;
                     case "attack":
                         int counter = 0;
-                        Console.WriteLine("Who would you like to attack? ");
+                        WriteLine("Who would you like to attack? ");
                         foreach (Mob npc in Lists.CurrentEnemies)
                         {
-                            Console.WriteLine(npc.Name);
+                            WriteLine(npc.Name);
                         }
                         string enemy = Console.ReadLine().ToLower();
                         foreach (Mob npc in Lists.CurrentEnemies)
@@ -113,7 +113,7 @@ namespace TheLastSurvivors
                         }
                         if (counter == 0)
                         {
-                            Console.WriteLine("No enemy exists.");
+                            WriteLine("No enemy exists.");
                         }
                         break;
                     case "look":
@@ -121,12 +121,12 @@ namespace TheLastSurvivors
                         //ALso will create a list of current enemies for the user to see, 
                         //Right now the max amount of enemies they will see is one,
                         //That's just because of the limited enemy locations. 
-                        Console.WriteLine(Arrays.Map[user.XLocation, user.YLocation].Name);
-                        Console.WriteLine(Arrays.Map[user.XLocation, user.YLocation].Description);
+                        WriteLine(Arrays.Map[user.XLocation, user.YLocation].Name);
+                        WriteLine(Arrays.Map[user.XLocation, user.YLocation].Description);
                         foreach (Mob npc in Lists.CurrentEnemies)
                         {
-                            Console.WriteLine("Enemies: ");
-                            Console.WriteLine(npc.Name);
+                            WriteLine("Enemies: ");
+                            WriteLine(npc.Name);
                         }
                         break;
                     case string a when a.Contains("look at"):
@@ -136,12 +136,12 @@ namespace TheLastSurvivors
                         {
                             if (character.Name.ToLower().Equals(interest))
                             {
-                                Console.WriteLine("You see a " + character.Name + " with " + character.HealthPoints + ".");
-                                Console.WriteLine("The " + character.Name + " is holding a " + character.Weapon.Name);
+                                WriteLine("You see a " + character.Name + " with " + character.HealthPoints + ".");
+                                WriteLine("The " + character.Name + " is holding a " + character.Weapon.Name);
                             }
                             else
                             {
-                                Console.WriteLine("There is no enemy by that name here.");
+                                WriteLine("There is no enemy by that name here.");
                             }
                         }
                         break;
@@ -149,14 +149,14 @@ namespace TheLastSurvivors
                     case "take":
                     case "pickup":
                     case "grab":
-                        Console.WriteLine("What would you like to pickup?");
+                        WriteLine("What would you like to pickup?");
                         string input = Console.ReadLine().ToLower();
                         foreach (Item item in Arrays.Map[user.XLocation, user.YLocation].Inventory)
                         {
                             if (input.Equals(item.Name.ToLower()))
                             {
                                 Item.TakeItem(item, user);
-                                Console.WriteLine("You've picked up " + item.Name);
+                                WriteLine("You've picked up " + item.Name);
                             }
                         }
                         break;
@@ -170,16 +170,16 @@ namespace TheLastSurvivors
                 //Die option, ends the current game
                 if (user.HealthPoints < 0)
                 {
-                    Console.WriteLine("You have died.");
+                    WriteLine("You have died.");
                     keepGoing = false;
                 }
                 else
                 {
-                    Console.WriteLine("You are currently in " + Arrays.Map[user.XLocation, user.YLocation].Name);
+                    WriteLine("You are currently in " + Arrays.Map[user.XLocation, user.YLocation].Name);
                 }
             } while (keepGoing == true);
             //thank user for playing. 
-            Console.WriteLine("Thanks for playing!");
+            WriteLine("Thanks for playing!");
             Console.ReadLine();
 
         }

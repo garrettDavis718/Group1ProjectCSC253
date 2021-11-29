@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using static World.WorldDelegates;
 
 namespace World
 {
     public static class Validation
     {
+        static ShowUserMessage message1 = Write;
+        static ShowUserMessage message2 = WriteLine;
+
         public static string TestPassword(string password)
         {
             string results = "";
@@ -45,7 +49,7 @@ namespace World
             else 
             {
                 results = false;
-                Console.WriteLine("Incorrect input for name");
+                WriteLine("Incorrect input for name");
             }
             return results;
         }
@@ -139,19 +143,19 @@ namespace World
             if (upper != true)
             {
                 result = false;
-                Console.WriteLine("Please enter an upper-cased letter in your password. ");
+                WriteLine("Please enter an upper-cased letter in your password. ");
             }
             //check if second bool is false, if so let user know
             else if (lower != true)
             {
                 result = false;
-                Console.WriteLine("Please enter a lower-cased letter in your password.");
+                WriteLine("Please enter a lower-cased letter in your password.");
             }
             //chekc if third bool is false, if so let user know
             else if (special != true)
             {
                 result = false;
-                Console.WriteLine("Please enter a special character in your password.");
+                WriteLine("Please enter a special character in your password.");
             }
             //If all bools come back true then we set our test result so we will finally set our password
             else { result = true; }
