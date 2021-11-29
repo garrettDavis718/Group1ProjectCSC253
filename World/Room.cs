@@ -36,7 +36,7 @@ namespace World
             {
                 currentRoom.Characters.Add(npc);
             }
-            WriteLine(currentRoom.Characters[1].Name);
+            //WriteLine(currentRoom.Characters[1].Name);
         }
 
         //room constructor
