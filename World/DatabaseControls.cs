@@ -69,21 +69,21 @@ namespace World
             }
         }
         //Method that will load potions into our application
-        public static List<Potion> LoadPotions()
+        public static void LoadPotions()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 var output = cnn.Query<Potion>("SELECT * FROM potions", new DynamicParameters());
-                return output.ToList();
+                Lists.Potions =  output.ToList();
             }
         }
         //Method that will load Treasures into our application
-        public static List<Treasure> LoadTreasures()
+        public static void LoadTreasures()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 var output = cnn.Query<Treasure>("SELECT * FROM Treasure", new DynamicParameters());
-                return output.ToList();
+                Lists.Treasures = output.ToList();
             }
         }
         //Method that will load Weapons into our application
@@ -96,12 +96,12 @@ namespace World
             }
         }
         //Method that will load KeyItems into our application
-        public static List<KeyItem> LoadKeyItems()
+        public static void LoadKeyItems()
         {
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 var output = cnn.Query<KeyItem>("SELECT * FROM KeyItems", new DynamicParameters());
-                return output.ToList();
+                Lists.KeyItems =  output.ToList();
             }
         }
         //Method to load doors
@@ -119,13 +119,17 @@ namespace World
             using (IDbConnection cnn = new SQLiteConnection(CreateConnectionString()))
             {
                 List<Character> characters = new List<Character>();
-                List<Item> inventory = new List<Item>();
+                List<Room> tempList = new List<Room>();
                 var output = cnn.Query<Room>("SELECT * From Rooms", new DynamicParameters());
-                Lists.rooms = output.ToList();
-                for (int i = 0; i < Lists.rooms.Count; i++)
+                tempList = output.ToList();
+                foreach (Room room in tempList)
                 {
-                    Lists.rooms[i] = new Room(Lists.rooms[i].Name, Lists.rooms[i].Description, Lists.rooms[i].XLocation,
-                        Lists.rooms[i].YLocation, Lists.rooms[i].ID, characters, inventory);
+                    Door door = Room.GetDoor(room);
+                    KeyItem key = Room.GetKeyItem(room);
+                    List<Item> inventory = new List<Item> { key };
+                    List<Door> doors = new List<Door>() { door };
+                    Room room2 = new Room(room.Name, room.Description, room.XLocation, room.YLocation, room.ID, characters, inventory, doors);
+                    Lists.rooms.Add(room2);
                 }
             }
         }

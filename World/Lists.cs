@@ -19,5 +19,6 @@ namespace World
         public static List<Weapon> Weapons = new List<Weapon>();
         public static List<Weapon> CurrentWeapon = new List<Weapon>();
         public static List<Door> Doors = new List<Door>();
+        public static List<KeyItem> KeyItems = new List<KeyItem>();
     }
 }

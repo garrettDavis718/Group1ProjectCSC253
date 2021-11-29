@@ -36,13 +36,12 @@ namespace World
             {
                 currentRoom.Characters.Add(npc);
             }
-            //WriteLine(currentRoom.Characters[1].Name);
         }
 
         //room constructor
         public Room(string name, string description, int xLocation, int yLocation, int id)
         {
-            
+
             _name = name;
             _description = description;
             XLocation = xLocation;
@@ -67,7 +66,7 @@ namespace World
             YLocation = yLocation;
             Characters = characters;
         }
-        public Room(string name, string description, int xLocation, int yLocation, int id, List<Character> characters, List<Item> inventory)
+        public Room(string name, string description, int xLocation, int yLocation, int id, List<Character> characters, List<Item> inventory, List<Door> doors)
         {
             _name = name;
             _description = description;
@@ -76,6 +75,7 @@ namespace World
             YLocation = yLocation;
             Characters = characters;
             ID = id;
+            Doors = doors;
         }
 
         public Room(string name)
@@ -125,19 +125,58 @@ namespace World
             }
         }
         //Method will load weapons into the map at their respective locationID
-        public static void LoadRoomsWeapons()
+        public static Door GetDoor(Room room)
         {
-            foreach (Room room in Lists.rooms)
+            int roomID = room.ID;
+            Door output = new Door();
+            switch (roomID)
             {
-                foreach (Weapon weapon in Lists.Weapons)
-                {
-                    if (room.ID.Equals(weapon.LocationID))
-                    {
-                        room.Inventory.Add(weapon);
-                    }
-                }
+                case 4:
+                    output = Lists.Doors[0];
+                    break;
+                case 5:
+                    output = Lists.Doors[1];
+                    break;
+                case 6:
+                    output = Lists.Doors[2];
+                    break;
+                case 13:
+                    output = Lists.Doors[3];
+                    break;
+                case 8:
+                    output = Lists.Doors[4];
+                    break;
+                case 9:
+                    output = Lists.Doors[5];
+                    break;
+                case 14:
+                    output = Lists.Doors[6];
+                    break;
+                case 19:
+                    output = Lists.Doors[7];
+                    break;
+                default:
+                    break;
             }
+            return output;
         }
+        public static KeyItem GetKeyItem(Room room)
+        {
+            int roomID = room.ID;
+            KeyItem output = new KeyItem();
+            switch (roomID)
+            {
+                case 1:
+                    output = Lists.KeyItems[0];
+                    break;
+                default:
+                    break;
+            }
+            return output;
+        }
+
+       
+
 
 
     }

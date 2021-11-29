@@ -48,15 +48,20 @@ namespace World
             Desc = desc;
             LocationID = locationID;
         }
-        public void DropItem(Item droppedItem, PlayerCharacter user)
+        public static void DropItem(string droppedItem, PlayerCharacter user)
         {
             Room room = Map.GetLocation(user);
             for (int i = 0; i < user.Inventory.Count; i++)
             {
-                if (user.Inventory[i].ID.Equals(droppedItem.ID))
+                if (user.Inventory[i].Name.ToLower().Equals(droppedItem.ToLower()))
                 {
-                    room.Inventory.Add(user.Inventory[i]);
+                    Arrays.Map[user.XLocation, user.YLocation].Inventory.Add(user.Inventory[i]);
                     user.Inventory.RemoveAt(i);
+                    Console.WriteLine("Dropped " + droppedItem + " in " + room);
+                }
+                else
+                {
+                    Console.WriteLine("No item by this name");
                 }
             }
         }
@@ -71,6 +76,7 @@ namespace World
                 //Console writeline, needs fix
                 WriteLine("You are too heavy to pick this item up.");
             }
+            
         }
         
         

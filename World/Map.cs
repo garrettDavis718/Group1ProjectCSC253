@@ -49,6 +49,12 @@ namespace World
                     //Character will be pushed up 1 in the 2d Map array
                     else
                     {
+                        direction = "n";
+                        if (Door.CheckIfDoorLocked(character.XLocation, character.YLocation, direction).Equals(true))
+                        {
+                            output = "Door is locked";
+                            break;
+                        }
                         character.YLocation += 1;
                         output = "You've moved North to " + Arrays.Map[character.XLocation, character.YLocation].Name;
                         Mob.GetCurrentEnemies();
@@ -63,41 +69,61 @@ namespace World
                     }
                     else
                     {
+                        direction = "s";
+                        if (Door.CheckIfDoorLocked(character.XLocation, character.YLocation, direction).Equals(true))
+                        {
+                            output = "Door is locked";
+                            break;
+                        }
                         character.YLocation -= 1;
                         output = "You've moved South to " + Arrays.Map[character.XLocation, character.YLocation].Name;
                         Mob.GetCurrentEnemies();
                         break;
                     }
-                case "west":
-                case "w":
-                    if (character.XLocation == 20 || Arrays.Map[character.XLocation + 1, character.YLocation].Name.Equals("Default"))
-                    {
-                        output = "Cannot currently travel West";
-                        break;
-                    }
-                    else
-                    {
-                        character.XLocation += 1;
-                        output = "You've moved West to " + Arrays.Map[character.XLocation, character.YLocation].Name;
-                        Mob.GetCurrentEnemies();
-                        break;
-                    }
                 case "east":
                 case "e":
-                    if (character.XLocation == 0 || Arrays.Map[character.XLocation - 1, character.YLocation].Name.Equals("Default"))
+                    if (character.XLocation == 20 || Arrays.Map[character.XLocation + 1, character.YLocation].Name.Equals("Default"))
                     {
                         output = "Cannot currently travel East";
                         break;
                     }
                     else
                     {
-                        character.XLocation -= 1;
+                        direction = "e";
+                        if (Door.CheckIfDoorLocked(character.XLocation, character.YLocation, direction).Equals(true))
+                        {
+                            output = "Door is locked";
+                            break;
+                        }
+                        character.XLocation += 1;
                         output = "You've moved East to " + Arrays.Map[character.XLocation, character.YLocation].Name;
+                        Mob.GetCurrentEnemies();
+                        break;
+                    }
+                case "west":
+                case "w":
+                    if (character.XLocation == 0 || Arrays.Map[character.XLocation - 1, character.YLocation].Name.Equals("Default"))
+                    {
+                        output = "Cannot currently travel West";
+                        break;
+                    }
+                    else
+                    {
+                        direction = "w";
+                        if (Door.CheckIfDoorLocked(character.XLocation, character.YLocation, direction).Equals(true))
+                        {
+                            output = "Door is locked";
+                            break;
+                        }
+                        character.XLocation -= 1;
+                        output = "You've moved West to " + Arrays.Map[character.XLocation, character.YLocation].Name;
                         Mob.GetCurrentEnemies();
                         break;
                     }
             }
             return output;
         }
+        
+
     }
 }

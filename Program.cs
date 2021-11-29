@@ -15,27 +15,28 @@ using System.Data.SqlClient;
 * Garrett Davis & Zach Fegan & Mateo Friend
 * This program is the third sprint, This incorporates database controls into the program, currently breaks when attacking, needs to have combat and info classes fixed
 * Program successfully updated to github
-* TODO Use item option, open containers, check for locks on doors, inventory functionality
+* TODO Use item option, open containers, inventory functionality
 */
 namespace TheLastSurvivors
 {
     public class Program
     {
-        
+
         public static void Main(string[] args)
         {
-            DatabaseControls.LoadRooms();
+            DatabaseControls.LoadKeyItems();
             DatabaseControls.LoadDoors();
+            DatabaseControls.LoadRooms();
+            DatabaseControls.LoadPotions();
             DatabaseControls.LoadWeapons();
             DatabaseControls.LoadMobs();
             DatabaseControls.LoadItems();
-            Room.LoadRoomsWeapons();
-            Room.LoadRoomsItems();
+            DatabaseControls.LoadTreasures();
             Map.BuildMap(Lists.rooms);
             //Run my first menu for entering the game and gettin the player's information
+            Console.ReadLine();
             Menu.GreetUser();
             Room.getCharacters();
-            Console.ReadLine();
             Menu.GameMenu();
             //Call our main menu method for the primary decision structure of my program
 
